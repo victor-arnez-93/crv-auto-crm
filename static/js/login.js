@@ -125,7 +125,7 @@ async function buscarVinculoUsuario(userId) {
   const { data, error } = await supabaseClient
     .from('usuarios_empresa')
     .select('id, empresa_id, ativo')
-    .eq('usuario_id', userId)
+    .eq('user_id', userId)
     .eq('ativo', true)
     .limit(1)
     .maybeSingle();
@@ -148,11 +148,12 @@ async function criarEmpresaInicial(user) {
   const { data: empresa, error: empresaError } = await supabaseClient
     .from('empresas')
     .insert({
+      nome: nomeEmpresa,
       nome_fantasia: nomeEmpresa,
-      razao_social: nomeEmpresa,
+      slug: `${nomeEmpresa.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '')}-${Date.now()}`,
       telefone,
       email: user.email,
-      ativo: true
+      ativa: true
     })
     .select('id')
     .single();
@@ -165,7 +166,7 @@ async function criarEmpresaInicial(user) {
     .from('usuarios_empresa')
     .insert({
       empresa_id: empresa.id,
-      usuario_id: user.id,
+      user_id: user.id,
       nome: nomeResponsavel,
       email: user.email,
       perfil: 'proprietario',
