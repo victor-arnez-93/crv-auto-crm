@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Documentos — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/documentos.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+    <nav class="admin-menu">
+      <a href="admin.html">Dashboard</a>
+
+      <span class="admin-menu-label">Comercial</span>
+
+      <a href="clientes.html">Clientes</a>
+      <a href="leads.html">Leads</a>
+      <a href="propostas.html">Propostas</a>
+      <a href="vendas.html">Vendas</a>
+
+      <span class="admin-menu-label">Operação</span>
+
+      <a href="estoque.html">Estoque</a>
+      <a href="financeiro.html">Financeiro</a>
+      <a href="documentos.html" class="active">Documentos</a>
+
+      <span class="admin-menu-label">Sistema</span>
+
+      <a href="configuracoes.html">Configurações</a>
+
+      <button type="button" id="logoutBtn">Sair</button>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">Gestão documental</span>
+        <h1>Documentos</h1>
+        <p>Organize documentos de veículos, contratos, recibos, laudos e arquivos comerciais.</p>
+      </div>
+    </header>
+
+    <section class="admin-stats documentos-stats">
+      <article>
+        <span>Total</span>
+        <strong id="statTotalDocumentos">0</strong>
+      </article>
+
+      <article>
+        <span>Veículos com documentos</span>
+        <strong id="statVeiculosDocumentos">0</strong>
+      </article>
+
+      <article>
+        <span>Arquivos recentes</span>
+        <strong id="statDocumentosRecentes">0</strong>
+      </article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Central de documentos</h2>
+        <p>Cadastre e consulte arquivos vinculados aos veículos da revenda.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="novoDocumentoBtn">
+          + Novo documento
+        </button>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>Documentos cadastrados</h2>
+          <p>Filtre por veículo, tipo de documento ou nome do arquivo.</p>
+        </div>
+      </div>
+
+      <div class="admin-filters documentos-filters">
+        <input type="search" id="buscaDocumentos" placeholder="Buscar documento...">
+
+        <select id="filtroTipoDocumento">
+          <option value="">Tipo: Todos</option>
+          <option value="CRLV">CRLV</option>
+          <option value="DUT">DUT</option>
+          <option value="Laudo cautelar">Laudo cautelar</option>
+          <option value="Contrato">Contrato</option>
+          <option value="Recibo">Recibo</option>
+          <option value="Nota fiscal">Nota fiscal</option>
+          <option value="Comprovante">Comprovante</option>
+          <option value="Outro">Outro</option>
+        </select>
+
+        <select id="filtroVeiculoDocumento">
+          <option value="">Veículo: Todos</option>
+        </select>
+
+        <select id="filtroOrdemDocumento">
+          <option value="recentes">Mais recentes</option>
+          <option value="nome">Nome A-Z</option>
+          <option value="tipo">Tipo A-Z</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap documentos-table-wrap">
+        <table class="admin-table documentos-table">
+          <thead>
+            <tr>
+              <th>Documento</th>
+              <th>Tipo</th>
+              <th>Veículo</th>
+              <th>Cadastro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="documentosTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="documentosEmpty">
+          Nenhum documento cadastrado ainda.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="documentoModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2 id="documentoModalTitle">Novo documento</h2>
+          <p>Envie o arquivo e vincule ao veículo correspondente.</p>
+        </div>
+
+        <button type="button" id="fecharDocumentoModalBtn">×</button>
+      </div>
+
+      <form id="documentoForm" class="admin-form">
+        <input type="hidden" id="documentoId">
+
+        <div class="admin-form-grid">
+          <label>
+            <span>Veículo vinculado</span>
+            <select id="documentoVeiculo" required>
+              <option value="">Selecione um veículo</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Tipo</span>
+            <select id="documentoTipo" required>
+              <option value="">Selecione</option>
+              <option value="CRLV">CRLV</option>
+              <option value="DUT">DUT</option>
+              <option value="Laudo cautelar">Laudo cautelar</option>
+              <option value="Contrato">Contrato</option>
+              <option value="Recibo">Recibo</option>
+              <option value="Nota fiscal">Nota fiscal</option>
+              <option value="Comprovante">Comprovante</option>
+              <option value="Outro">Outro</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Nome do documento</span>
+            <input id="documentoNome" type="text" required placeholder="Ex: CRLV HB20 2019">
+          </label>
+        </div>
+
+        <label>
+          <span>Arquivo</span>
+          <input id="documentoArquivo" type="file" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+        </label>
+
+        <label>
+          <span>Observações</span>
+          <textarea id="documentoObservacoes" placeholder="Informações adicionais sobre o documento..."></textarea>
+        </label>
+
+        <div class="documento-preview" id="documentoPreview" hidden>
+          <span>Arquivo atual</span>
+          <a href="#" id="documentoPreviewLink" target="_blank" rel="noopener">Abrir documento</a>
+        </div>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarDocumentoBtn">
+            Cancelar
+          </button>
+
+          <button type="submit" class="admin-btn admin-btn-primary">
+            Salvar documento
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">
+          Cancelar
+        </button>
+
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">
+          Sim, sair
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/documentos.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/clientes.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+<nav class="admin-menu">
+
+  <a href="admin.html">Dashboard</a>
+
+  <span class="admin-menu-label">Comercial</span>
+
+  <a href="clientes.html" class="active">Clientes</a>
+  <a href="leads.html">Leads</a>
+  <a href="propostas.html">Propostas</a>
+  <a href="vendas.html">Vendas</a>
+
+  <span class="admin-menu-label">Operação</span>
+
+  <a href="estoque.html">Estoque</a>
+  <a href="financeiro.html">Financeiro</a>
+  <a href="documentos.html">Documentos</a>
+
+  <span class="admin-menu-label">Sistema</span>
+
+  <a href="configuracoes.html">Configurações</a>
+
+  <button type="button" id="logoutBtn">Sair</button>
+
+</nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">CRM da revenda</span>
+        <h1>Clientes</h1>
+      </div>
+    </header>
+
+    <section class="admin-stats">
+      <article>
+        <span>Total</span>
+        <strong id="statTotalClientes">0</strong>
+      </article>
+
+      <article>
+        <span>Ativos</span>
+        <strong id="statClientesAtivos">0</strong>
+      </article>
+
+      <article>
+        <span>Com WhatsApp</span>
+        <strong id="statClientesWhatsapp">0</strong>
+      </article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Cadastro de clientes</h2>
+        <p>Organize contatos, interessados e compradores da revenda.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="novoClienteBtn">
+          + Novo cliente
+        </button>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>Clientes cadastrados</h2>
+          <p>Gerencie dados de contato, origem e observações comerciais.</p>
+        </div>
+      </div>
+
+      <div class="admin-filters clientes-filters">
+        <input type="search" id="buscaClientes" placeholder="Buscar cliente...">
+
+        <select id="filtroStatusCliente">
+          <option value="">Status: Todos</option>
+          <option value="ativo">Ativos</option>
+          <option value="inativo">Inativos</option>
+          <option value="bloqueado">Bloqueados</option>
+        </select>
+
+        <select id="filtroOrigemCliente">
+          <option value="">Origem: Todas</option>
+        </select>
+
+        <select id="filtroOrdemCliente">
+          <option value="recentes">Mais recentes</option>
+          <option value="nome">Nome A-Z</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap clientes-table-wrap">
+        <table class="admin-table clientes-table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Contato</th>
+              <th>Origem</th>
+              <th>Status</th>
+              <th>Cadastro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="clientesTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="clientesEmpty">
+          Nenhum cliente cadastrado ainda.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="clienteModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <h2 id="clienteModalTitle">Novo cliente</h2>
+        <button type="button" id="fecharClienteModalBtn">×</button>
+      </div>
+
+      <form id="clienteForm" class="admin-form">
+        <input type="hidden" id="clienteId">
+
+        <div class="admin-form-grid">
+          <label>
+            <span>Nome</span>
+            <input id="clienteNome" type="text" required>
+          </label>
+
+          <label>
+            <span>Telefone</span>
+            <input id="clienteTelefone" type="text" inputmode="tel">
+          </label>
+
+          <label>
+            <span>WhatsApp</span>
+            <input id="clienteWhatsapp" type="text" inputmode="tel">
+          </label>
+
+          <label>
+            <span>E-mail</span>
+            <input id="clienteEmail" type="email">
+          </label>
+
+          <label>
+            <span>CPF / CNPJ</span>
+            <input id="clienteCpfCnpj" type="text">
+          </label>
+
+          <label>
+            <span>Origem</span>
+            <select id="clienteOrigem">
+              <option value="">Selecione</option>
+              <option>Site</option>
+              <option>WhatsApp</option>
+              <option>Instagram</option>
+              <option>Indicação</option>
+              <option>Loja física</option>
+              <option>Outro</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Status</span>
+            <select id="clienteStatus" required>
+              <option value="ativo">Ativo</option>
+              <option value="inativo">Inativo</option>
+              <option value="bloqueado">Bloqueado</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <span>Observações</span>
+          <textarea id="clienteObservacoes" placeholder="Preferências, histórico de atendimento, interesse em veículos..."></textarea>
+        </label>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarClienteBtn">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Salvar cliente</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">
+          Cancelar
+        </button>
+
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">
+          Sim, sair
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/clientes.js"></script>
+</body>
+</html>

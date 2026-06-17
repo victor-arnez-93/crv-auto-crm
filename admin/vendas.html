@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vendas — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/vendas.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+    <nav class="admin-menu">
+      <a href="admin.html">Dashboard</a>
+
+      <span class="admin-menu-label">Comercial</span>
+
+      <a href="clientes.html">Clientes</a>
+      <a href="leads.html">Leads</a>
+      <a href="propostas.html">Propostas</a>
+      <a href="vendas.html" class="active">Vendas</a>
+
+      <span class="admin-menu-label">Operação</span>
+
+      <a href="estoque.html">Estoque</a>
+      <a href="financeiro.html">Financeiro</a>
+      <a href="documentos.html">Documentos</a>
+
+      <span class="admin-menu-label">Sistema</span>
+
+      <a href="configuracoes.html">Configurações</a>
+
+      <button type="button" id="logoutBtn">Sair</button>
+    </nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">Comercial fechado</span>
+        <h1>Vendas</h1>
+        <p>Registre vendas concluídas, marque veículos como vendidos e integre o financeiro.</p>
+      </div>
+    </header>
+
+    <section class="admin-stats vendas-stats">
+      <article>
+        <span>Total vendido</span>
+        <strong id="statTotalVendas">R$ 0</strong>
+      </article>
+
+      <article>
+        <span>Vendas no mês</span>
+        <strong id="statVendasMes">0</strong>
+      </article>
+
+      <article>
+        <span>Ticket médio</span>
+        <strong id="statTicketMedio">R$ 0</strong>
+      </article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Registro de vendas</h2>
+        <p>Controle cada venda concluída e mantenha o estoque, financeiro e documentos organizados.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="novaVendaBtn">
+          + Nova venda
+        </button>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>Vendas cadastradas</h2>
+          <p>Acompanhe veículos vendidos, clientes, valores e formas de pagamento.</p>
+        </div>
+      </div>
+
+      <div class="admin-filters vendas-filters">
+        <input type="search" id="buscaVendas" placeholder="Buscar venda...">
+
+        <select id="filtroFormaPagamentoVenda">
+          <option value="">Pagamento: Todos</option>
+          <option>Dinheiro</option>
+          <option>PIX</option>
+          <option>Cartão de débito</option>
+          <option>Cartão de crédito</option>
+          <option>Financiamento</option>
+          <option>Consórcio</option>
+          <option>Troca</option>
+          <option>Outro</option>
+        </select>
+
+        <select id="filtroStatusVenda">
+          <option value="">Status: Todos</option>
+          <option value="concluida">Concluída</option>
+          <option value="cancelada">Cancelada</option>
+        </select>
+
+        <select id="filtroOrdemVenda">
+          <option value="recentes">Mais recentes</option>
+          <option value="valor-desc">Maior valor</option>
+          <option value="valor-asc">Menor valor</option>
+          <option value="data">Data da venda</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap vendas-table-wrap">
+        <table class="admin-table vendas-table">
+          <thead>
+            <tr>
+              <th>Venda</th>
+              <th>Cliente</th>
+              <th>Veículo</th>
+              <th>Valor</th>
+              <th>Pagamento</th>
+              <th>Status</th>
+              <th>Data</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="vendasTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="vendasEmpty">
+          Nenhuma venda cadastrada ainda.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="vendaModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2 id="vendaModalTitle">Nova venda</h2>
+          <p>Ao concluir uma venda, o veículo pode ser marcado como vendido automaticamente.</p>
+        </div>
+
+        <button type="button" id="fecharVendaModalBtn">×</button>
+      </div>
+
+      <form id="vendaForm" class="admin-form">
+        <input type="hidden" id="vendaId">
+
+        <div class="admin-form-grid">
+          <label>
+            <span>Cliente</span>
+            <select id="vendaCliente" required>
+              <option value="">Selecione um cliente</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Veículo vendido</span>
+            <select id="vendaVeiculo" required>
+              <option value="">Selecione um veículo</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Proposta vinculada</span>
+            <select id="vendaProposta">
+              <option value="">Nenhuma proposta vinculada</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Valor da venda</span>
+            <input id="vendaValor" type="text" inputmode="numeric" placeholder="R$ 0,00" required>
+          </label>
+
+          <label>
+            <span>Forma de pagamento</span>
+            <select id="vendaFormaPagamento" required>
+              <option value="">Selecione</option>
+              <option>Dinheiro</option>
+              <option>PIX</option>
+              <option>Cartão de débito</option>
+              <option>Cartão de crédito</option>
+              <option>Financiamento</option>
+              <option>Consórcio</option>
+              <option>Troca</option>
+              <option>Outro</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Data da venda</span>
+            <input id="vendaData" type="date" required>
+          </label>
+
+          <label>
+            <span>Vendedor</span>
+            <input id="vendaVendedor" type="text" placeholder="Nome do vendedor">
+          </label>
+
+          <label>
+            <span>Status</span>
+            <select id="vendaStatus" required>
+              <option value="concluida">Concluída</option>
+              <option value="cancelada">Cancelada</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="admin-checks">
+          <label>
+            <input id="vendaAtualizarEstoque" type="checkbox" checked>
+            <span>Marcar veículo como vendido</span>
+          </label>
+
+          <label>
+            <input id="vendaGerarFinanceiro" type="checkbox" checked>
+            <span>Gerar receita no financeiro</span>
+          </label>
+        </div>
+
+        <label>
+          <span>Observações</span>
+          <textarea id="vendaObservacoes" placeholder="Condições da venda, troca, financiamento, documentação..."></textarea>
+        </label>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarVendaBtn">
+            Cancelar
+          </button>
+
+          <button type="submit" class="admin-btn admin-btn-primary">
+            Salvar venda
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">
+          Cancelar
+        </button>
+
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">
+          Sim, sair
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/vendas.js"></script>
+</body>
+</html>

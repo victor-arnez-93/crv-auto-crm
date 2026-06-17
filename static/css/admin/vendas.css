@@ -1,0 +1,583 @@
+/* ============================================================
+   MAXX VEÍCULOS — VENDAS.CSS
+   CRM · Vendas · Fechamento Comercial
+   Mesmo padrão visual do Dashboard/Estoque
+   ============================================================ */
+
+/* ==================== AÇÕES RÁPIDAS ==================== */
+
+.admin-quick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-bottom: 24px;
+  padding: 24px 26px;
+
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+
+  background:
+    radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--dynamic-primary) 10%, transparent), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(12,12,12,.86);
+
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+}
+
+.admin-quick h2 {
+  margin-bottom: 5px;
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.admin-quick p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.admin-quick-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ==================== FILTROS ==================== */
+
+.admin-filters.vendas-filters {
+  display: grid;
+  grid-template-columns: 1.7fr repeat(3, minmax(170px, 1fr));
+  gap: 12px;
+
+  margin-bottom: 22px;
+  padding: 18px;
+
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+    rgba(5,5,5,.34);
+}
+
+.vendas-filters input,
+.vendas-filters select {
+  width: 100%;
+  height: 46px;
+
+  padding: 0 15px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-body);
+  font-size: 13px;
+
+  outline: none;
+  transition: var(--trans);
+}
+
+.vendas-filters select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+  padding-right: 40px;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath fill='none' stroke='%23ff3b2f' stroke-width='1.6' stroke-linecap='round' d='M1 1l4.5 4.5L10 1'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.vendas-filters input::placeholder {
+  color: var(--muted-2);
+}
+
+.vendas-filters input:focus,
+.vendas-filters select:focus {
+  border-color: var(--primary-line);
+  background: var(--primary-dim);
+  box-shadow: 0 0 0 3px rgba(255,59,47,.08);
+}
+
+.vendas-filters option {
+  background: #181818;
+  color: #fff;
+}
+
+/* ==================== TABELA ==================== */
+
+.vendas-table-wrap {
+  max-height: 520px;
+  overflow: auto;
+
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.vendas-table {
+  width: 100%;
+  min-width: 1180px;
+
+  border-collapse: collapse;
+  background: rgba(5,5,5,.34);
+}
+
+.vendas-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.vendas-table th {
+  padding: 15px 14px;
+
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-align: left;
+  text-transform: uppercase;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035)),
+    #111;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.vendas-table td {
+  padding: 16px 14px;
+
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,.065);
+
+  vertical-align: middle;
+}
+
+.vendas-table tr:last-child td {
+  border-bottom: none;
+}
+
+.vendas-table tbody tr {
+  height: 78px;
+  transition: var(--trans);
+}
+
+.vendas-table tbody tr:hover {
+  background: rgba(255,59,47,.045);
+}
+
+.vendas-table-wrap::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.vendas-table-wrap::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dynamic-primary) 45%, transparent);
+}
+
+/* ==================== VENDA ==================== */
+
+.venda-info,
+.venda-cliente,
+.venda-veiculo {
+  display: grid;
+  gap: 4px;
+}
+
+.venda-info strong,
+.venda-cliente strong,
+.venda-veiculo strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.venda-info span,
+.venda-cliente span,
+.venda-veiculo span {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.venda-valor {
+  color: #7cff9b;
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.venda-pagamento {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: fit-content;
+  padding: 7px 12px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+
+  background: rgba(255,255,255,.055);
+  color: var(--white);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+}
+
+.venda-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-width: 120px;
+  padding: 7px 12px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+}
+
+.venda-status::before {
+  content: '';
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+  background: currentColor;
+
+  box-shadow: 0 0 10px currentColor;
+}
+
+.venda-status.concluida {
+  color: #7cff9b;
+  background: rgba(74,222,128,.12);
+  border: 1px solid rgba(74,222,128,.35);
+}
+
+.venda-status.cancelada {
+  color: #ffb7b0;
+  background: rgba(248,113,113,.12);
+  border: 1px solid rgba(248,113,113,.35);
+}
+
+.venda-data {
+  color: var(--text);
+  font-size: 13px;
+}
+
+.vendas-table .admin-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+/* ==================== FORM / MODAL ==================== */
+
+#vendaModal .admin-modal-card {
+  max-width: 1100px;
+}
+
+.admin-form {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.admin-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-form label span {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 0 15px;
+
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+
+  outline: none;
+  transition: var(--trans);
+}
+
+.admin-form select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+  padding-right: 40px;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath fill='none' stroke='%23ff3b2f' stroke-width='1.6' stroke-linecap='round' d='M1 1l4.5 4.5L10 1'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.admin-form option {
+  background: #181818;
+  color: #fff;
+}
+
+.admin-form textarea {
+  min-height: 116px;
+  padding: 14px 15px;
+  resize: vertical;
+}
+
+.admin-form input[type="date"] {
+  color-scheme: dark;
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+  border-color: var(--primary-line);
+  background: var(--primary-dim);
+  box-shadow: 0 0 0 3px rgba(255,59,47,.08);
+}
+
+/* ==================== SWITCHES ==================== */
+
+.admin-checks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.admin-checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+
+  cursor: pointer;
+}
+
+.admin-checks input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  width: 52px;
+  height: 30px;
+  min-height: 30px;
+
+  position: relative;
+
+  border-radius: 999px;
+  border: 1px solid var(--line);
+
+  background: rgba(255,255,255,.08);
+
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.admin-checks input[type="checkbox"]::before {
+  content: '';
+
+  position: absolute;
+  top: 50%;
+  left: 4px;
+
+  width: 22px;
+  height: 22px;
+
+  border-radius: 50%;
+  background: var(--muted);
+
+  transform: translateY(-50%);
+  transition: var(--trans);
+}
+
+.admin-checks input[type="checkbox"]:checked {
+  background: rgba(74,222,128,.18);
+  border-color: rgba(74,222,128,.40);
+}
+
+.admin-checks input[type="checkbox"]:checked::before {
+  left: 25px;
+  background: #4ade80;
+  box-shadow: 0 0 14px rgba(74,222,128,.45);
+}
+
+.admin-checks span {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.admin-icon-btn {
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2);
+
+  color: var(--muted);
+  background: rgba(255,255,255,.045);
+
+  transition: var(--trans);
+}
+
+.admin-icon-btn:hover {
+  color: var(--white);
+  background: var(--primary-dim);
+  border-color: var(--primary-line);
+  transform: translateY(-2px);
+}
+
+/* ==================== EMPTY ==================== */
+
+#vendasEmpty {
+  display: none;
+}
+
+/* ==================== TEMA CLARO ==================== */
+
+body.admin-light .admin-quick,
+body.admin-light .admin-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.76)),
+    rgba(255,255,255,.92);
+
+  border-color: rgba(0,0,0,.10);
+}
+
+body.admin-light .admin-filters.vendas-filters,
+body.admin-light .vendas-table {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.82)),
+    rgba(255,255,255,.9);
+
+  border-color: rgba(0,0,0,.10);
+}
+
+body.admin-light .vendas-filters input,
+body.admin-light .vendas-filters select,
+body.admin-light .admin-form input,
+body.admin-light .admin-form select,
+body.admin-light .admin-form textarea {
+  color: #111;
+  background: rgba(255,255,255,.95);
+  border-color: rgba(0,0,0,.14);
+}
+
+body.admin-light .vendas-filters option,
+body.admin-light .admin-form option {
+  color: #111;
+  background: #fff;
+}
+
+body.admin-light .admin-form input[type="date"] {
+  color-scheme: light;
+}
+
+body.admin-light .vendas-table th {
+  color: color-mix(in srgb, var(--dynamic-primary) 78%, #111);
+  background: rgba(0,0,0,.055);
+}
+
+body.admin-light .venda-info strong,
+body.admin-light .venda-cliente strong,
+body.admin-light .venda-veiculo strong {
+  color: #111;
+}
+
+body.admin-light .admin-checks span {
+  color: #4b5563;
+}
+
+/* ==================== RESPONSIVO ==================== */
+
+@media (max-width: 1280px) {
+  .admin-filters.vendas-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .vendas-filters input {
+    grid-column: 1 / -1;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-filters.vendas-filters {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .vendas-filters input {
+    grid-column: auto;
+  }
+
+  .vendas-table {
+    min-width: 1050px;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #vendaModal .admin-modal-card {
+    max-width: calc(100vw - 24px);
+  }
+
+  .admin-checks {
+    flex-direction: column;
+    gap: 14px;
+  }
+}

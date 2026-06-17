@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Propostas — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/propostas.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+<nav class="admin-menu">
+
+  <a href="admin.html">Dashboard</a>
+
+  <span class="admin-menu-label">Comercial</span>
+
+  <a href="clientes.html">Clientes</a>
+  <a href="leads.html">Leads</a>
+  <a href="propostas.html" class="active">Propostas</a>
+  <a href="vendas.html">Vendas</a>
+
+  <span class="admin-menu-label">Operação</span>
+
+  <a href="estoque.html">Estoque</a>
+  <a href="financeiro.html">Financeiro</a>
+  <a href="documentos.html">Documentos</a>
+
+  <span class="admin-menu-label">Sistema</span>
+
+  <a href="configuracoes.html">Configurações</a>
+
+  <button type="button" id="logoutBtn">Sair</button>
+
+</nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">Negociação</span>
+        <h1>Propostas</h1>
+      </div>
+    </header>
+
+    <section class="admin-stats">
+      <article><span>Total</span><strong id="statTotalPropostas">0</strong></article>
+      <article><span>Abertas</span><strong id="statPropostasAbertas">0</strong></article>
+      <article><span>Vendidas</span><strong id="statPropostasVendidas">0</strong></article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Controle de propostas</h2>
+        <p>Registre negociações, entrada, parcelas, status e veículo vinculado.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="novaPropostaBtn">+ Nova proposta</button>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>Propostas cadastradas</h2>
+          <p>Acompanhe negociações abertas, aprovadas, recusadas e vendas concluídas.</p>
+        </div>
+      </div>
+
+      <div class="admin-filters propostas-filters">
+        <input type="search" id="buscaPropostas" placeholder="Buscar proposta...">
+
+        <select id="filtroStatusProposta">
+          <option value="">Status: Todos</option>
+          <option value="aberta">Aberta</option>
+          <option value="em_analise">Em análise</option>
+          <option value="aprovada">Aprovada</option>
+          <option value="recusada">Recusada</option>
+          <option value="vendida">Vendida</option>
+          <option value="cancelada">Cancelada</option>
+        </select>
+
+        <select id="filtroOrdemProposta">
+          <option value="recentes">Mais recentes</option>
+          <option value="valor-desc">Maior valor</option>
+          <option value="valor-asc">Menor valor</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap propostas-table-wrap">
+        <table class="admin-table propostas-table">
+          <thead>
+            <tr>
+              <th>Cliente</th>
+              <th>Veículo</th>
+              <th>Valor</th>
+              <th>Entrada</th>
+              <th>Parcelas</th>
+              <th>Status</th>
+              <th>Cadastro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="propostasTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="propostasEmpty">Nenhuma proposta cadastrada ainda.</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="propostaModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <h2 id="propostaModalTitle">Nova proposta</h2>
+        <button type="button" id="fecharPropostaModalBtn">×</button>
+      </div>
+
+      <form id="propostaForm" class="admin-form">
+        <input type="hidden" id="propostaId">
+
+        <div class="admin-form-grid">
+          <label>
+            <span>Cliente</span>
+            <select id="propostaCliente">
+              <option value="">Nenhum cliente vinculado</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Lead</span>
+            <select id="propostaLead">
+              <option value="">Nenhum lead vinculado</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Veículo</span>
+            <select id="propostaVeiculo">
+              <option value="">Nenhum veículo vinculado</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Valor da proposta</span>
+            <input id="propostaValor" type="text" inputmode="numeric" placeholder="R$ 0,00">
+          </label>
+
+          <label>
+            <span>Entrada</span>
+            <input id="propostaEntrada" type="text" inputmode="numeric" placeholder="R$ 0,00">
+          </label>
+
+          <label>
+            <span>Quantidade de parcelas</span>
+            <input id="propostaParcelas" type="text" inputmode="numeric">
+          </label>
+
+          <label>
+            <span>Valor da parcela</span>
+            <input id="propostaValorParcela" type="text" inputmode="numeric" placeholder="R$ 0,00">
+          </label>
+
+          <label>
+            <span>Status</span>
+            <select id="propostaStatus" required>
+              <option value="aberta">Aberta</option>
+              <option value="em_analise">Em análise</option>
+              <option value="aprovada">Aprovada</option>
+              <option value="recusada">Recusada</option>
+              <option value="vendida">Vendida</option>
+              <option value="cancelada">Cancelada</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <span>Observações</span>
+          <textarea id="propostaObservacoes"></textarea>
+        </label>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarPropostaBtn">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Salvar proposta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">Cancelar</button>
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">Sim, sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/propostas.js"></script>
+</body>
+</html>

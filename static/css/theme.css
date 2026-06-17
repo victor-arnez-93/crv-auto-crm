@@ -1,0 +1,930 @@
+:root {
+  --admin-sidebar-width: 270px;
+  --admin-header-height: 86px;
+}
+
+.admin-page {
+  --dynamic-primary: var(--primary);
+  --dynamic-secondary: #111111;
+}
+
+.admin-page.has-admin-header .admin-main {
+  padding-top: 120px;
+}
+
+/* ==================== HEADER GLOBAL ==================== */
+
+.admin-global-header {
+  position: fixed;
+  top: 0;
+  left: var(--admin-sidebar-width);
+  right: 0;
+  z-index: 25;
+
+  min-height: var(--admin-header-height);
+  padding: 16px 34px;
+
+  display: flex;
+  align-items: center;
+  gap: 22px;
+
+  border-bottom: 1px solid var(--line);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.035)),
+    rgba(8,8,8,.82);
+
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  box-shadow: 0 18px 60px rgba(0,0,0,.34);
+
+  transition: left .28s ease, background .25s ease;
+}
+
+.admin-global-brand {
+  min-width: 280px;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.admin-global-brand-logo {
+  display: none;
+}
+
+.admin-global-brand-text strong {
+  display: block;
+
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1.05;
+}
+
+.admin-global-brand-text span {
+  display: block;
+  margin-top: 4px;
+
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.admin-global-search {
+  position: relative;
+  flex: 1;
+  max-width: 520px;
+}
+
+.admin-global-search input {
+  width: 100%;
+  height: 48px;
+  padding: 0 48px 0 18px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  outline: none;
+  transition: var(--trans);
+}
+
+.admin-global-search input::placeholder {
+  color: var(--muted-2);
+  opacity: 1;
+}
+
+.admin-global-search input:focus {
+  border-color: var(--dynamic-primary);
+  background: var(--primary-dim);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--dynamic-primary) 18%, transparent);
+}
+
+.admin-global-search span {
+  position: absolute;
+  top: 50%;
+  right: 18px;
+
+  color: var(--muted);
+  font-size: 22px;
+
+  transform: translateY(-50%);
+}
+
+.admin-global-actions {
+  margin-left: auto;
+
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-global-clock {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: .8px;
+  white-space: nowrap;
+}
+
+.admin-global-weather {
+  min-height: 46px;
+  padding: 0 13px;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+
+  color: var(--text);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  white-space: nowrap;
+
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.admin-global-weather:hover {
+  color: var(--white);
+  border-color: var(--dynamic-primary);
+  background: var(--primary-dim);
+  transform: translateY(-2px);
+}
+
+.admin-global-weather img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+}
+
+.admin-theme-toggle {
+  width: 46px;
+  height: 46px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  border: 1px solid var(--line-2);
+
+  color: var(--white);
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--dynamic-primary) 48%, transparent), rgba(255,255,255,.06));
+
+  font-size: 18px;
+  transition: var(--trans);
+}
+
+.admin-theme-toggle:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 34px color-mix(in srgb, var(--dynamic-primary) 28%, transparent);
+}
+
+.admin-global-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 7px 12px 7px 7px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+
+  background: rgba(255,255,255,.045);
+}
+
+.admin-global-avatar {
+  width: 38px;
+  height: 38px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: var(--white);
+  background: var(--dynamic-primary);
+
+  font-family: var(--font-display);
+  font-weight: 800;
+}
+
+.admin-global-user strong {
+  display: block;
+
+  color: var(--white);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.admin-global-user span {
+  display: block;
+  margin-top: 3px;
+
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==================== SIDEBAR ==================== */
+
+.admin-sidebar {
+  display: flex;
+  flex-direction: column;
+
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--dynamic-primary) 55%, transparent) transparent;
+
+  transition: width .28s ease, padding .28s ease;
+}
+
+.admin-sidebar::-webkit-scrollbar {
+  width: 7px;
+  height: 0;
+}
+
+.admin-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.admin-sidebar::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dynamic-primary) 46%, transparent);
+}
+
+.admin-menu {
+  flex: 1;
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .4px;
+}
+
+.admin-menu a,
+.admin-menu button {
+  overflow: hidden;
+
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: .4px;
+}
+
+.admin-menu a::after,
+.admin-menu button::after {
+  content: '';
+  position: absolute;
+  left: 18px;
+  right: 18px;
+  bottom: 7px;
+
+  height: 1px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--dynamic-primary) 80%, transparent),
+    transparent
+  );
+
+  opacity: .42;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--dynamic-primary) 58%, transparent);
+}
+
+.admin-menu a:hover::after,
+.admin-menu button:hover::after,
+.admin-menu a.active::after {
+  opacity: 1;
+}
+
+.admin-menu a:hover,
+.admin-menu button:hover,
+.admin-menu a.active {
+  background: color-mix(in srgb, var(--dynamic-primary) 18%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 42%, transparent);
+}
+
+.admin-menu a.active::before {
+  background: var(--dynamic-primary);
+  box-shadow: 0 0 12px var(--dynamic-primary);
+}
+
+.admin-sidebar-toggle {
+  position: absolute;
+  top: 24px;
+  right: -17px;
+  z-index: 50;
+
+  width: 34px;
+  height: 34px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--dynamic-primary) 48%, transparent);
+
+  color: var(--white);
+  background:
+    linear-gradient(135deg, var(--dynamic-primary), #111);
+
+  box-shadow: 0 14px 38px rgba(0,0,0,.42);
+  transition: var(--trans);
+}
+
+.admin-sidebar-toggle:hover {
+  transform: scale(1.06);
+}
+
+.admin-sidebar-toggle span {
+  transition: transform .25s ease;
+}
+
+.admin-sidebar-footer {
+  margin-top: auto;
+  padding-top: 20px;
+
+  border-top: 1px solid var(--line);
+}
+
+.admin-sidebar-footer small {
+  display: block;
+  margin-bottom: 12px;
+
+  color: var(--muted);
+  font-family: var(--font-display);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.7px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.admin-sidebar-footer a {
+  min-height: 88px;
+  padding: 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 22px;
+  border: 1px solid var(--line-2);
+
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--dynamic-primary) 10%, transparent), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.08), rgba(255,255,255,.025)),
+    rgba(255,255,255,.035);
+}
+
+.admin-sidebar-footer a:hover {
+  border-color: color-mix(in srgb, var(--dynamic-primary) 46%, transparent);
+  box-shadow: 0 14px 38px color-mix(in srgb, var(--dynamic-primary) 14%, transparent);
+}
+
+.admin-sidebar-footer img {
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* ==================== SIDEBAR RECOLHIDA ==================== */
+
+body.sidebar-collapsed {
+  --admin-sidebar-width: 92px;
+}
+
+body.sidebar-collapsed .admin-sidebar {
+  width: 92px;
+  padding: 18px 14px;
+}
+
+body.sidebar-collapsed .admin-main {
+  margin-left: 92px;
+}
+
+body.sidebar-collapsed .admin-global-header {
+  left: 92px;
+}
+
+body.sidebar-collapsed .admin-logo {
+  min-height: 72px;
+  padding: 12px;
+}
+
+body.sidebar-collapsed .admin-logo img {
+  max-height: 44px;
+}
+
+body.sidebar-collapsed .admin-menu a,
+body.sidebar-collapsed .admin-menu button {
+  justify-content: center;
+  padding: 0;
+  font-size: 0;
+}
+
+body.sidebar-collapsed .admin-menu a::after,
+body.sidebar-collapsed .admin-menu button::after {
+  left: 22px;
+  right: 22px;
+}
+
+body.sidebar-collapsed .admin-menu a.active::before {
+  margin-right: 0;
+}
+
+body.sidebar-collapsed .admin-sidebar-footer small {
+  display: none;
+}
+
+body.sidebar-collapsed .admin-sidebar-footer a {
+  min-height: 54px;
+  padding: 8px;
+}
+
+body.sidebar-collapsed .admin-sidebar-footer img {
+  max-width: 48px;
+}
+
+body.sidebar-collapsed .admin-sidebar-toggle span {
+  transform: rotate(180deg);
+}
+
+/* ==================== MODAL CLIMA ==================== */
+
+.admin-weather-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 6000;
+
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  padding: 20px;
+
+  background: rgba(0,0,0,.62);
+  backdrop-filter: blur(10px);
+}
+
+.admin-weather-modal.show {
+  display: flex;
+}
+
+.admin-weather-card {
+  width: min(330px, 100%);
+  padding: 12px;
+
+  border-radius: 14px;
+  border: 1px solid var(--dynamic-primary);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.025)),
+    rgba(8,8,8,.94);
+
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.62),
+    0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 30%, transparent);
+}
+
+.admin-weather-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 4px 4px 12px;
+  margin-bottom: 8px;
+
+  border-bottom: 1px solid color-mix(in srgb, var(--dynamic-primary) 42%, transparent);
+}
+
+.admin-weather-head strong {
+  color: var(--dynamic-primary);
+  font-family: var(--font-display);
+  font-size: 20px;
+  font-weight: 800;
+}
+
+.admin-weather-head button {
+  width: 32px;
+  height: 32px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 50%;
+
+  color: var(--white);
+  background: transparent;
+
+  font-size: 26px;
+  line-height: 1;
+}
+
+.admin-weather-days {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-weather-day {
+  min-height: 54px;
+  padding: 0 12px;
+
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  align-items: center;
+  gap: 14px;
+
+  border-radius: 9px;
+  border: 1px solid color-mix(in srgb, var(--dynamic-primary) 32%, transparent);
+
+  background: rgba(255,255,255,.035);
+}
+
+.admin-weather-day span {
+  color: var(--white);
+  font-weight: 800;
+  text-transform: lowercase;
+}
+
+.admin-weather-day strong {
+  color: var(--dynamic-primary);
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: 800;
+}
+
+.admin-weather-day em {
+  font-style: normal;
+  font-size: 24px;
+}
+
+/* ==================== TEMA CLARO ==================== */
+
+body.admin-light {
+  --text: #1f1f24;
+  --muted: #64646f;
+  --muted-2: #777783;
+  --white: #101014;
+  --line: rgba(0,0,0,.12);
+  --line-2: rgba(0,0,0,.18);
+
+  background:
+    radial-gradient(circle at 18% 16%, color-mix(in srgb, var(--dynamic-primary) 10%, transparent), transparent 30%),
+    linear-gradient(135deg, #f6f6f7 0%, #ffffff 48%, #eeeeF1 100%);
+}
+
+body.admin-light .admin-sidebar,
+body.admin-light .admin-global-header,
+body.admin-light .admin-panel,
+body.admin-light .admin-quick,
+body.admin-light .admin-stats article,
+body.admin-light .admin-modal-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.76)),
+    rgba(255,255,255,.9);
+
+  box-shadow:
+    0 10px 35px rgba(0,0,0,.06),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+body.admin-light .admin-global-header {
+  border-bottom: 1px solid rgba(0,0,0,.12);
+}
+
+body.admin-light .admin-table {
+  background: rgba(255,255,255,.9);
+}
+
+body.admin-light .admin-table th {
+  background: rgba(0,0,0,.055);
+  border-bottom: 1px solid rgba(0,0,0,.10);
+}
+
+body.admin-light .admin-table td {
+  border-bottom-color: rgba(0,0,0,.065);
+}
+
+body.admin-light .admin-form input,
+body.admin-light .admin-form select,
+body.admin-light .admin-form textarea,
+body.admin-light .admin-filters input,
+body.admin-light .admin-filters select,
+body.admin-light .admin-global-search input {
+  color: #111;
+  background: rgba(255,255,255,.95);
+  border: 1px solid rgba(0,0,0,.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+body.admin-light .admin-form input::placeholder,
+body.admin-light .admin-form textarea::placeholder,
+body.admin-light .admin-filters input::placeholder,
+body.admin-light .admin-global-search input::placeholder {
+  color: #6b7280;
+  opacity: 1;
+}
+
+body.admin-light .admin-form input:focus,
+body.admin-light .admin-form select:focus,
+body.admin-light .admin-form textarea:focus,
+body.admin-light .admin-filters input:focus,
+body.admin-light .admin-filters select:focus,
+body.admin-light .admin-global-search input:focus {
+  border-color: color-mix(in srgb, var(--dynamic-primary) 70%, #111);
+  background: #fff;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--dynamic-primary) 16%, transparent),
+    inset 0 1px 0 rgba(255,255,255,.9);
+}
+
+body.admin-light .admin-form option,
+body.admin-light .admin-filters option {
+  color: #111;
+  background: #fff;
+}
+
+body.admin-light .admin-global-weather,
+body.admin-light .admin-global-user {
+  background: rgba(255,255,255,.92);
+  border-color: rgba(0,0,0,.14);
+}
+
+body.admin-light .admin-global-weather:hover {
+  color: #111;
+  background: color-mix(in srgb, var(--dynamic-primary) 12%, #fff);
+}
+
+body.admin-light .admin-theme-toggle {
+  color: #111;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--dynamic-primary) 18%, #fff), #ffffff);
+
+  border-color: rgba(0,0,0,.14);
+}
+
+body.admin-light .admin-sidebar-toggle {
+  color: #111;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--dynamic-primary) 26%, #ffffff),
+      #ffffff
+    );
+
+  border: 1px solid rgba(0,0,0,.16);
+  box-shadow: 0 12px 28px rgba(0,0,0,.18);
+}
+
+body.admin-light .admin-sidebar-toggle span,
+body.admin-light .admin-sidebar-toggle i,
+body.admin-light .admin-sidebar-toggle svg {
+  color: #111;
+  fill: #111;
+  stroke: #111;
+}
+
+body.admin-light .admin-menu a::after,
+body.admin-light .admin-menu button::after {
+  opacity: .52;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--dynamic-primary) 72%, #111),
+    transparent
+  );
+  box-shadow: 0 0 10px color-mix(in srgb, var(--dynamic-primary) 38%, transparent);
+}
+
+body.admin-light .admin-menu a:hover::after,
+body.admin-light .admin-menu button:hover::after,
+body.admin-light .admin-menu a.active::after {
+  opacity: 1;
+}
+
+body.admin-light .admin-menu a:hover,
+body.admin-light .admin-menu button:hover,
+body.admin-light .admin-menu a.active {
+  background: color-mix(in srgb, var(--dynamic-primary) 13%, #fff);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 34%, rgba(0,0,0,.12));
+}
+
+body.admin-light .admin-sidebar-footer a {
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--dynamic-primary) 10%, transparent), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.98), rgba(255,255,255,.72)),
+    rgba(255,255,255,.92);
+}
+
+body.admin-light .admin-weather-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.86)),
+    #fff;
+
+  box-shadow:
+    0 24px 70px rgba(0,0,0,.18),
+    0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 26%, transparent);
+}
+
+body.admin-light .admin-weather-day {
+  background: rgba(0,0,0,.035);
+}
+
+body.admin-light .admin-weather-day span {
+  color: #111;
+}
+
+body.admin-light .admin-weather-head button {
+  color: #111;
+}
+
+/* ==================== STATUS / BADGES ==================== */
+
+.status-disponivel,
+.badge-disponivel,
+.admin-status-disponivel,
+[data-status="disponivel"],
+[data-status="Disponível"] {
+  background: rgba(34,197,94,.18) !important;
+  border: 1px solid rgba(34,197,94,.55) !important;
+  color: #16a34a !important;
+  font-weight: 900 !important;
+  box-shadow: 0 0 14px rgba(34,197,94,.16) !important;
+}
+
+/* ==================== MOBILE COMPLETO ==================== */
+
+.admin-mobile-menu-btn {
+  display: none;
+}
+
+.admin-mobile-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 18;
+
+  display: none;
+
+  background: rgba(0,0,0,.66);
+  backdrop-filter: blur(8px);
+}
+
+.admin-mobile-overlay.show {
+  display: block;
+}
+
+@media (max-width: 1024px) {
+  .admin-page.has-admin-header .admin-main {
+    padding-top: 24px;
+  }
+
+  .admin-global-header {
+    position: sticky;
+    top: 0;
+    left: 0;
+
+    padding: 14px 16px;
+
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 12px;
+  }
+
+  .admin-mobile-menu-btn {
+    width: 44px;
+    height: 44px;
+
+    display: grid;
+    place-items: center;
+
+    border-radius: 14px;
+    border: 1px solid var(--line-2);
+
+    color: var(--white);
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--dynamic-primary) 38%, transparent), rgba(255,255,255,.05));
+
+    font-size: 22px;
+  }
+
+  .admin-global-brand {
+    min-width: 0;
+  }
+
+  .admin-global-brand-text strong {
+    font-size: 16px;
+  }
+
+  .admin-global-brand-text span {
+    font-size: 11px;
+  }
+
+  .admin-global-search {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+
+  .admin-global-actions {
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-left: 0;
+
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+
+  .admin-sidebar {
+    position: fixed !important;
+    inset: 0 auto 0 0 !important;
+    z-index: 40;
+
+    width: min(320px, 86vw) !important;
+    padding: 22px !important;
+
+    transform: translateX(-105%);
+    transition: transform .28s ease;
+  }
+
+  .admin-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .admin-sidebar-toggle {
+    display: none;
+  }
+
+  body.sidebar-collapsed .admin-sidebar {
+    width: min(320px, 86vw) !important;
+  }
+
+  body.sidebar-collapsed .admin-main,
+  .admin-main {
+    margin-left: 0 !important;
+  }
+
+  body.sidebar-collapsed .admin-menu a,
+  body.sidebar-collapsed .admin-menu button {
+    justify-content: flex-start;
+    padding: 0 16px;
+    font-size: 14px;
+  }
+
+  body.sidebar-collapsed .admin-sidebar-footer small {
+    display: block;
+  }
+
+  body.sidebar-collapsed .admin-sidebar-footer img {
+    max-width: 100%;
+    width: 200px;
+  }
+
+  body.admin-light .admin-mobile-menu-btn {
+    color: #111;
+    background:
+      linear-gradient(135deg, color-mix(in srgb, var(--dynamic-primary) 20%, #fff), #fff);
+  }
+}
+
+@media (max-width: 720px) {
+  .admin-global-header {
+    padding: 12px;
+  }
+
+  .admin-global-clock {
+    font-size: 17px;
+  }
+
+  .admin-global-weather,
+  .admin-theme-toggle {
+    min-height: 42px;
+    height: 42px;
+  }
+
+  .admin-theme-toggle {
+    width: 42px;
+  }
+
+  .admin-global-user {
+    width: 100%;
+  }
+
+  .admin-weather-card {
+    width: min(310px, 100%);
+  }
+}

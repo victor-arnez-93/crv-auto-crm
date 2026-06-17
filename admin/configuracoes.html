@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Configurações — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/configuracoes.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+<nav class="admin-menu">
+
+  <a href="admin.html">Dashboard</a>
+
+  <span class="admin-menu-label">Comercial</span>
+
+  <a href="clientes.html">Clientes</a>
+  <a href="leads.html">Leads</a>
+  <a href="propostas.html">Propostas</a>
+  <a href="vendas.html">Vendas</a>
+
+  <span class="admin-menu-label">Operação</span>
+
+  <a href="estoque.html">Estoque</a>
+  <a href="financeiro.html">Financeiro</a>
+  <a href="documentos.html">Documentos</a>
+
+  <span class="admin-menu-label">Sistema</span>
+
+  <a href="configuracoes.html" class="active">Configurações</a>
+
+  <button type="button" id="logoutBtn">Sair</button>
+
+</nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar config-topbar">
+      <div>
+        <span class="admin-eyebrow">Sistema</span>
+        <h1>Configurações</h1>
+        <p>Gerencie os dados da empresa, site, marca e preferências comerciais do painel.</p>
+      </div>
+    </header>
+
+    <form id="configForm" class="config-shell">
+      <section class="config-tabs" aria-label="Abas de configurações">
+        <button type="button" class="config-tab active" data-tab="empresa">Empresa</button>
+        <button type="button" class="config-tab" data-tab="endereco">Endereço</button>
+        <button type="button" class="config-tab" data-tab="site">Site</button>
+        <button type="button" class="config-tab" data-tab="marca">Marca</button>
+      </section>
+
+      <section class="config-panel active" id="tabEmpresa">
+        <article class="config-card" data-config-card="empresa">
+          <div class="config-card-head">
+            <div>
+              <span>Dados cadastrais</span>
+              <h2>Empresa</h2>
+              <p>Informações principais utilizadas no painel, site e documentos comerciais.</p>
+            </div>
+
+            <button type="button" class="config-edit-btn" data-edit-card="empresa">Editar</button>
+          </div>
+
+          <div class="config-form-grid">
+            <label>
+              <span>Nome fantasia</span>
+              <input id="nomeFantasia" data-card-field="empresa">
+            </label>
+
+            <label>
+              <span>Razão social</span>
+              <input id="razaoSocial" data-card-field="empresa">
+            </label>
+
+            <label>
+              <span>CNPJ</span>
+              <input id="cnpj" data-card-field="empresa">
+            </label>
+
+            <label>
+              <span>E-mail</span>
+              <input id="emailEmpresa" type="email" data-card-field="empresa">
+            </label>
+
+            <label>
+              <span>Telefone</span>
+              <input id="telefoneEmpresa" data-card-field="empresa">
+            </label>
+
+            <label>
+              <span>WhatsApp</span>
+              <input id="whatsappEmpresa" data-card-field="empresa">
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <section class="config-panel" id="tabEndereco">
+        <article class="config-card" data-config-card="endereco">
+          <div class="config-card-head">
+            <div>
+              <span>Localização</span>
+              <h2>Endereço</h2>
+              <p>Endereço exibido no site e usado como referência comercial da revenda.</p>
+            </div>
+
+            <button type="button" class="config-edit-btn" data-edit-card="endereco">Editar</button>
+          </div>
+
+          <div class="config-form-grid">
+            <label class="config-wide">
+              <span>Endereço</span>
+              <input id="enderecoEmpresa" data-card-field="endereco">
+            </label>
+
+            <label>
+              <span>Cidade</span>
+              <input id="cidadeEmpresa" data-card-field="endereco">
+            </label>
+
+            <label>
+              <span>Estado</span>
+              <select id="estadoEmpresa" data-card-field="endereco">
+                <option value="">Selecione</option>
+                <option value="AC">AC</option>
+                <option value="AL">AL</option>
+                <option value="AP">AP</option>
+                <option value="AM">AM</option>
+                <option value="BA">BA</option>
+                <option value="CE">CE</option>
+                <option value="DF">DF</option>
+                <option value="ES">ES</option>
+                <option value="GO">GO</option>
+                <option value="MA">MA</option>
+                <option value="MT">MT</option>
+                <option value="MS">MS</option>
+                <option value="MG">MG</option>
+                <option value="PA">PA</option>
+                <option value="PB">PB</option>
+                <option value="PR">PR</option>
+                <option value="PE">PE</option>
+                <option value="PI">PI</option>
+                <option value="RJ">RJ</option>
+                <option value="RN">RN</option>
+                <option value="RS">RS</option>
+                <option value="RO">RO</option>
+                <option value="RR">RR</option>
+                <option value="SC">SC</option>
+                <option value="SP">SP</option>
+                <option value="SE">SE</option>
+                <option value="TO">TO</option>
+              </select>
+            </label>
+
+            <label>
+              <span>CEP</span>
+              <input id="cepEmpresa" data-card-field="endereco">
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <section class="config-panel" id="tabSite">
+        <article class="config-card" data-config-card="site">
+          <div class="config-card-head">
+            <div>
+              <span>Presença digital</span>
+              <h2>Site e atendimento</h2>
+              <p>Redes sociais, horário de atendimento e mensagem padrão para interessados.</p>
+            </div>
+
+            <button type="button" class="config-edit-btn" data-edit-card="site">Editar</button>
+          </div>
+
+          <div class="config-form-grid">
+            <label>
+              <span>Instagram</span>
+              <input id="instagramEmpresa" data-card-field="site">
+            </label>
+
+            <label>
+              <span>Facebook</span>
+              <input id="facebookEmpresa" data-card-field="site">
+            </label>
+
+            <label>
+              <span>Horário de atendimento</span>
+              <input id="horarioEmpresa" placeholder="Seg. a Sex. 08h às 18h" data-card-field="site">
+            </label>
+
+            <label class="config-wide">
+              <span>Mensagem padrão WhatsApp</span>
+              <textarea id="mensagemWhatsapp" data-card-field="site"></textarea>
+            </label>
+          </div>
+
+          <div class="config-checks">
+            <label>
+              <input id="sitePublico" type="checkbox" data-card-field="site">
+              <span>Site público ativo</span>
+            </label>
+          </div>
+        </article>
+      </section>
+
+      <section class="config-panel" id="tabMarca">
+        <article class="config-card" data-config-card="marca">
+          <div class="config-card-head">
+            <div>
+              <span>White label</span>
+              <h2>Marca visual</h2>
+              <p>Logo e tema premium do painel. O cliente escolhe um preset seguro, sem quebrar o visual.</p>
+            </div>
+
+            <button type="button" class="config-edit-btn" data-edit-card="marca">Editar</button>
+          </div>
+
+          <div class="config-brand-grid">
+            <div>
+              <label class="config-upload">
+                <span>Logo da empresa</span>
+                <input id="logoEmpresa" type="file" accept="image/*" data-card-field="marca">
+
+                <div class="config-upload-box">
+                  <strong>Enviar nova logo</strong>
+                  <small>PNG, JPG ou WEBP. Preferência: fundo transparente.</small>
+                </div>
+              </label>
+
+              <div class="config-logo-preview" id="logoPreviewWrap">
+                <img id="logoPreview" alt="Logo da empresa">
+                <span id="logoPreviewEmpty">Nenhuma logo cadastrada</span>
+              </div>
+            </div>
+
+            <div>
+              <span class="config-theme-label">Tema visual</span>
+
+              <div class="config-theme-grid" id="temaVisualGrid">
+                <button type="button" class="config-theme-card active" data-theme-preset="vermelho" data-card-field="marca">
+                  <span class="theme-dot theme-red"></span>
+                  <strong>Vermelho Maxx</strong>
+                  <small>Esportivo, forte e comercial</small>
+                </button>
+
+                <button type="button" class="config-theme-card" data-theme-preset="azul" data-card-field="marca">
+                  <span class="theme-dot theme-blue"></span>
+                  <strong>Azul premium</strong>
+                  <small>Confiança e tecnologia</small>
+                </button>
+
+                <button type="button" class="config-theme-card" data-theme-preset="cinza" data-card-field="marca">
+                  <span class="theme-dot theme-gray"></span>
+                  <strong>Cinza metálico</strong>
+                  <small>Sobriedade automotiva</small>
+                </button>
+
+                <button type="button" class="config-theme-card" data-theme-preset="premium" data-card-field="marca">
+                  <span class="theme-dot theme-gold"></span>
+                  <strong>Escuro premium</strong>
+                  <small>Luxo e alto padrão</small>
+                </button>
+              </div>
+            </div>
+          </div>
+        </article>
+      </section>
+
+      <div class="config-save-bar">
+        <div>
+          <strong id="configStatusTitle">Configurações bloqueadas</strong>
+          <span id="configStatusText">Clique em editar no card que deseja alterar.</span>
+        </div>
+
+        <button type="submit" class="admin-btn admin-btn-primary" id="salvarConfigBtn" disabled>
+          Salvar alterações
+        </button>
+      </div>
+    </form>
+  </main>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">
+          Cancelar
+        </button>
+
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">
+          Sim, sair
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/configuracoes.js"></script>
+</body>
+</html>

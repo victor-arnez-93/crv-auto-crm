@@ -1,0 +1,534 @@
+/* ============================================================
+   MAXX VEÍCULOS — PROPOSTAS.CSS
+   CRM · Negociação · Propostas
+   Mesmo padrão visual do Dashboard/Estoque
+   ============================================================ */
+
+/* ==================== AÇÕES RÁPIDAS ==================== */
+
+.admin-quick {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+
+  margin-bottom: 24px;
+  padding: 24px 26px;
+
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+
+  background:
+    radial-gradient(circle at 12% 20%, color-mix(in srgb, var(--dynamic-primary) 10%, transparent), transparent 28%),
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(12,12,12,.86);
+
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+}
+
+.admin-quick h2 {
+  margin-bottom: 5px;
+
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.admin-quick p {
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.admin-quick-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* ==================== FILTROS ==================== */
+
+.admin-filters.propostas-filters {
+  display: grid;
+  grid-template-columns: 1.7fr repeat(2, minmax(170px, 1fr));
+  gap: 12px;
+
+  margin-bottom: 22px;
+  padding: 18px;
+
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02)),
+    rgba(5,5,5,.34);
+}
+
+.propostas-filters input,
+.propostas-filters select {
+  width: 100%;
+  height: 46px;
+
+  padding: 0 15px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-body);
+  font-size: 13px;
+
+  outline: none;
+  transition: var(--trans);
+}
+
+.propostas-filters select {
+  appearance: none;
+  cursor: pointer;
+
+  padding-right: 38px;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath fill='none' stroke='%23ff3b2f' stroke-width='1.6' stroke-linecap='round' d='M1 1l4.5 4.5L10 1'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.propostas-filters input::placeholder {
+  color: var(--muted-2);
+}
+
+.propostas-filters input:focus,
+.propostas-filters select:focus {
+  border-color: var(--primary-line);
+  background: var(--primary-dim);
+
+  box-shadow: 0 0 0 3px rgba(255,59,47,.08);
+}
+
+.propostas-filters option {
+  background: #111;
+  color: #fff;
+}
+
+/* ==================== TABELA ==================== */
+
+.propostas-table-wrap {
+  max-height: 452px;
+  overflow: auto;
+
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+}
+
+.propostas-table {
+  width: 100%;
+  min-width: 980px;
+
+  border-collapse: collapse;
+  background: rgba(5,5,5,.34);
+}
+
+.propostas-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+}
+
+.propostas-table th {
+  padding: 15px 14px;
+
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+  text-align: left;
+  text-transform: uppercase;
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035)),
+    #111;
+
+  border-bottom: 1px solid var(--line);
+}
+
+.propostas-table td {
+  padding: 16px 14px;
+
+  color: var(--text);
+  border-bottom: 1px solid rgba(255,255,255,.065);
+
+  vertical-align: middle;
+}
+
+.propostas-table tr:last-child td {
+  border-bottom: none;
+}
+
+.propostas-table tbody tr {
+  height: 78px;
+  transition: var(--trans);
+}
+
+.propostas-table tbody tr:hover {
+  background: rgba(255,59,47,.045);
+}
+
+.propostas-table-wrap::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.propostas-table-wrap::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dynamic-primary) 45%, transparent);
+}
+
+/* ==================== PROPOSTA ==================== */
+
+.proposta-info {
+  display: grid;
+  gap: 3px;
+}
+
+.proposta-info strong {
+  display: block;
+
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.proposta-info span {
+  display: block;
+
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.proposta-money {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 16px;
+  font-weight: 800;
+}
+
+.proposta-money small {
+  display: block;
+  margin-top: 4px;
+
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+/* ==================== STATUS ==================== */
+
+.proposta-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  min-width: 128px;
+  padding: 7px 11px;
+
+  border-radius: 999px;
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .9px;
+  text-transform: uppercase;
+}
+
+.proposta-status::before {
+  content: '';
+
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+  background: currentColor;
+
+  box-shadow: 0 0 10px currentColor;
+}
+
+.proposta-status.aberta {
+  color: #93c5fd;
+  border: 1px solid rgba(59,130,246,.36);
+  background: rgba(59,130,246,.12);
+}
+
+.proposta-status.em_analise {
+  color: #fbbf24;
+  border: 1px solid rgba(245,158,11,.36);
+  background: rgba(245,158,11,.12);
+}
+
+.proposta-status.aprovada {
+  color: #7cff9b;
+  border: 1px solid rgba(34,197,94,.36);
+  background: rgba(34,197,94,.12);
+}
+
+.proposta-status.recusada,
+.proposta-status.cancelada {
+  color: #ffb7b0;
+  border: 1px solid rgba(239,68,68,.36);
+  background: rgba(239,68,68,.12);
+}
+
+.proposta-status.vendida {
+  color: #ff8f7a;
+  border: 1px solid rgba(255,59,47,.42);
+  background: rgba(255,59,47,.16);
+}
+
+/* ==================== AÇÕES ==================== */
+
+.propostas-table .admin-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 8px;
+}
+
+.admin-icon-btn {
+  width: 38px;
+  height: 38px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line-2);
+
+  color: var(--muted);
+  background: rgba(255,255,255,.045);
+
+  transition: var(--trans);
+}
+
+.admin-icon-btn:hover {
+  color: var(--white);
+  background: var(--primary-dim);
+  border-color: var(--primary-line);
+
+  transform: translateY(-2px);
+}
+
+/* ==================== EMPTY ==================== */
+
+.admin-empty {
+  display: none;
+
+  padding: 44px 20px;
+
+  text-align: center;
+  color: var(--muted);
+
+  border: 1px dashed var(--line-2);
+  border-radius: var(--radius);
+
+  margin-top: 18px;
+}
+
+.admin-empty.show {
+  display: block;
+}
+
+/* ==================== FORM ==================== */
+
+.admin-form {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.admin-form label {
+  display: grid;
+  gap: 8px;
+}
+
+.admin-form label span {
+  color: var(--muted);
+
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.admin-form input,
+.admin-form select,
+.admin-form textarea {
+  width: 100%;
+  min-height: 46px;
+
+  padding: 0 15px;
+
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+
+  outline: none;
+  transition: var(--trans);
+}
+
+.admin-form textarea {
+  min-height: 104px;
+  padding: 14px 15px;
+  resize: vertical;
+}
+
+.admin-form input:focus,
+.admin-form select:focus,
+.admin-form textarea:focus {
+  border-color: var(--primary-line);
+  background: var(--primary-dim);
+
+  box-shadow: 0 0 0 3px rgba(255,59,47,.08);
+}
+
+/* ==================== TEMA CLARO ==================== */
+
+body.admin-light .admin-quick,
+body.admin-light .admin-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.98), rgba(255,255,255,.76)),
+    rgba(255,255,255,.92);
+
+  border-color: rgba(0,0,0,.10);
+}
+
+body.admin-light .admin-filters.propostas-filters,
+body.admin-light .propostas-table {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.95), rgba(255,255,255,.82)),
+    rgba(255,255,255,.9);
+
+  border-color: rgba(0,0,0,.10);
+}
+
+body.admin-light .propostas-filters input,
+body.admin-light .propostas-filters select,
+body.admin-light .admin-form input,
+body.admin-light .admin-form select,
+body.admin-light .admin-form textarea {
+  color: #111;
+  background: rgba(255,255,255,.95);
+  border-color: rgba(0,0,0,.14);
+}
+
+body.admin-light .propostas-table th {
+  color: color-mix(in srgb, var(--dynamic-primary) 78%, #111);
+  background: rgba(0,0,0,.055);
+}
+
+body.admin-light .propostas-table tbody tr:hover {
+  background: color-mix(in srgb, var(--dynamic-primary) 8%, #fff);
+}
+
+/* ==================== SELECTS / OPTIONS PROPOSTAS ==================== */
+
+.admin-form select {
+  appearance: none;
+  -webkit-appearance: none;
+
+  cursor: pointer;
+
+  padding-right: 40px;
+
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='7' viewBox='0 0 11 7'%3E%3Cpath fill='none' stroke='%23ff3b2f' stroke-width='1.6' stroke-linecap='round' d='M1 1l4.5 4.5L10 1'/%3E%3C/svg%3E");
+
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+}
+
+.admin-form select option,
+.propostas-filters select option {
+  color: #ffffff;
+  background: #181818;
+}
+
+.admin-form select option:checked,
+.propostas-filters select option:checked {
+  color: #ffffff;
+  background: #262626;
+}
+
+body.admin-light .admin-form select option,
+body.admin-light .propostas-filters select option {
+  color: #111111;
+  background: #ffffff;
+}
+
+body.admin-light .admin-form select option:checked,
+body.admin-light .propostas-filters select option:checked {
+  color: #111111;
+  background: #f1f1f1;
+}
+
+/* ==================== DATE / INPUTS PROPOSTAS ==================== */
+
+.admin-form input[type="date"] {
+  color-scheme: dark;
+}
+
+body.admin-light .admin-form input[type="date"] {
+  color-scheme: light;
+}
+
+/* ==================== RESPONSIVO ==================== */
+
+@media (max-width: 1280px) {
+
+  .admin-filters.propostas-filters {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .propostas-filters input {
+    grid-column: 1 / -1;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 720px) {
+
+  .admin-quick {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 20px 16px;
+  }
+
+  .admin-filters.propostas-filters {
+    grid-template-columns: 1fr;
+    padding: 16px;
+  }
+
+  .propostas-table {
+    min-width: 920px;
+  }
+
+  .admin-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

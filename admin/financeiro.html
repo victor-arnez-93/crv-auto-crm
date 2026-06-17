@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Financeiro — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/financeiro.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+<nav class="admin-menu">
+
+  <a href="admin.html">Dashboard</a>
+
+  <span class="admin-menu-label">Comercial</span>
+
+  <a href="clientes.html">Clientes</a>
+  <a href="leads.html">Leads</a>
+  <a href="propostas.html">Propostas</a>
+  <a href="vendas.html">Vendas</a>
+
+  <span class="admin-menu-label">Operação</span>
+
+  <a href="estoque.html">Estoque</a>
+  <a href="financeiro.html" class="active">Financeiro</a>
+  <a href="documentos.html">Documentos</a>
+
+  <span class="admin-menu-label">Sistema</span>
+
+  <a href="configuracoes.html">Configurações</a>
+
+  <button type="button" id="logoutBtn">Sair</button>
+
+</nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">Gestão financeira</span>
+        <h1>Financeiro</h1>
+      </div>
+    </header>
+
+    <section class="admin-stats financeiro-stats">
+      <article><span>Receitas</span><strong id="statReceitas">R$ 0</strong></article>
+      <article><span>Despesas</span><strong id="statDespesas">R$ 0</strong></article>
+      <article><span>Saldo</span><strong id="statSaldo">R$ 0</strong></article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Lançamentos financeiros</h2>
+        <p>Controle receitas, despesas, vencimentos e pagamentos da revenda.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="novoLancamentoBtn">+ Novo lançamento</button>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>Lançamentos</h2>
+          <p>Visualize contas pagas, pendentes, receitas e despesas.</p>
+        </div>
+      </div>
+
+      <div class="admin-filters financeiro-filters">
+        <input type="search" id="buscaFinanceiro" placeholder="Buscar lançamento...">
+
+        <select id="filtroTipoFinanceiro">
+          <option value="">Tipo: Todos</option>
+          <option value="receita">Receitas</option>
+          <option value="despesa">Despesas</option>
+        </select>
+
+        <select id="filtroPagoFinanceiro">
+          <option value="">Pagamento: Todos</option>
+          <option value="pago">Pagos</option>
+          <option value="pendente">Pendentes</option>
+        </select>
+
+        <select id="filtroOrdemFinanceiro">
+          <option value="recentes">Mais recentes</option>
+          <option value="valor-desc">Maior valor</option>
+          <option value="valor-asc">Menor valor</option>
+          <option value="vencimento">Vencimento</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap financeiro-table-wrap">
+        <table class="admin-table financeiro-table">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Tipo</th>
+              <th>Categoria</th>
+              <th>Valor</th>
+              <th>Lançamento</th>
+              <th>Vencimento</th>
+              <th>Status</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="financeiroTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="financeiroEmpty">Nenhum lançamento cadastrado ainda.</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="financeiroModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <h2 id="financeiroModalTitle">Novo lançamento</h2>
+        <button type="button" id="fecharFinanceiroModalBtn">×</button>
+      </div>
+
+      <form id="financeiroForm" class="admin-form">
+        <input type="hidden" id="financeiroId">
+
+        <div class="admin-form-grid">
+          <label>
+            <span>Tipo</span>
+            <select id="financeiroTipo" required>
+              <option value="receita">Receita</option>
+              <option value="despesa">Despesa</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Categoria</span>
+            <input id="financeiroCategoria" required placeholder="Venda, manutenção, anúncio...">
+          </label>
+
+          <label>
+            <span>Descrição</span>
+            <input id="financeiroDescricao" required>
+          </label>
+
+          <label>
+            <span>Valor</span>
+            <input id="financeiroValor" type="text" inputmode="numeric" placeholder="R$ 0,00" required>
+          </label>
+
+          <label>
+            <span>Data do lançamento</span>
+            <input id="financeiroDataLancamento" type="date" required>
+          </label>
+
+          <label>
+            <span>Data de vencimento</span>
+            <input id="financeiroDataVencimento" type="date">
+          </label>
+
+          <label>
+            <span>Forma de pagamento</span>
+            <select id="financeiroFormaPagamento">
+              <option value="">Selecione</option>
+              <option>Dinheiro</option>
+              <option>PIX</option>
+              <option>Cartão de débito</option>
+              <option>Cartão de crédito</option>
+              <option>Boleto</option>
+              <option>Transferência</option>
+              <option>Outro</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Veículo vinculado</span>
+            <select id="financeiroVeiculo">
+              <option value="">Nenhum veículo vinculado</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Cliente vinculado</span>
+            <select id="financeiroCliente">
+              <option value="">Nenhum cliente vinculado</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="admin-checks">
+          <label>
+            <input id="financeiroPago" type="checkbox">
+            <span>Pago</span>
+          </label>
+        </div>
+
+        <label>
+          <span>Observações</span>
+          <textarea id="financeiroObservacoes"></textarea>
+        </label>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarFinanceiroBtn">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Salvar lançamento</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">Cancelar</button>
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">Sim, sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/financeiro.js"></script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Leads — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/leads.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+<nav class="admin-menu">
+
+  <a href="admin.html">Dashboard</a>
+
+  <span class="admin-menu-label">Comercial</span>
+
+  <a href="clientes.html">Clientes</a>
+  <a href="leads.html" class="active">Leads</a>
+  <a href="propostas.html">Propostas</a>
+  <a href="vendas.html">Vendas</a>
+
+  <span class="admin-menu-label">Operação</span>
+
+  <a href="estoque.html">Estoque</a>
+  <a href="financeiro.html">Financeiro</a>
+  <a href="documentos.html">Documentos</a>
+
+  <span class="admin-menu-label">Sistema</span>
+
+  <a href="configuracoes.html">Configurações</a>
+
+  <button type="button" id="logoutBtn">Sair</button>
+
+</nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">Funil comercial</span>
+        <h1>Leads</h1>
+      </div>
+    </header>
+
+    <section class="admin-stats">
+      <article><span>Total</span><strong id="statTotalLeads">0</strong></article>
+      <article><span>Novos</span><strong id="statLeadsNovos">0</strong></article>
+      <article><span>Em negociação</span><strong id="statLeadsNegociacao">0</strong></article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Captação e atendimento</h2>
+        <p>Controle interessados vindos do site, WhatsApp, Instagram e loja física.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="novoLeadBtn">+ Novo lead</button>
+      </div>
+    </section>
+
+    <section class="admin-panel">
+      <div class="admin-panel-head">
+        <div>
+          <h2>Leads cadastrados</h2>
+          <p>Acompanhe cada oportunidade até virar proposta ou venda.</p>
+        </div>
+      </div>
+
+      <div class="admin-filters leads-filters">
+        <input type="search" id="buscaLeads" placeholder="Buscar lead...">
+
+        <select id="filtroEtapaLead">
+          <option value="">Etapa: Todas</option>
+          <option value="novo">Novo</option>
+          <option value="contato">Contato</option>
+          <option value="negociacao">Negociação</option>
+          <option value="proposta">Proposta</option>
+          <option value="ganho">Ganho</option>
+          <option value="perdido">Perdido</option>
+        </select>
+
+        <select id="filtroOrigemLead">
+          <option value="">Origem: Todas</option>
+        </select>
+
+        <select id="filtroOrdemLead">
+          <option value="recentes">Mais recentes</option>
+          <option value="nome">Nome A-Z</option>
+        </select>
+      </div>
+
+      <div class="admin-table-wrap leads-table-wrap">
+        <table class="admin-table leads-table">
+          <thead>
+            <tr>
+              <th>Lead</th>
+              <th>Contato</th>
+              <th>Origem</th>
+              <th>Etapa</th>
+              <th>Cadastro</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="leadsTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="leadsEmpty">Nenhum lead cadastrado ainda.</div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="leadModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <h2 id="leadModalTitle">Novo lead</h2>
+        <button type="button" id="fecharLeadModalBtn">×</button>
+      </div>
+
+      <form id="leadForm" class="admin-form">
+        <input type="hidden" id="leadId">
+
+        <div class="admin-form-grid">
+          <label>
+            <span>Nome</span>
+            <input id="leadNome" required>
+          </label>
+
+          <label>
+            <span>Telefone / WhatsApp</span>
+            <input id="leadTelefone" inputmode="tel">
+          </label>
+
+          <label>
+            <span>E-mail</span>
+            <input id="leadEmail" type="email">
+          </label>
+
+          <label>
+            <span>Origem</span>
+            <select id="leadOrigem">
+              <option value="">Selecione</option>
+              <option>Site</option>
+              <option>WhatsApp</option>
+              <option>Instagram</option>
+              <option>Facebook</option>
+              <option>Indicação</option>
+              <option>Loja física</option>
+              <option>Outro</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Etapa</span>
+            <select id="leadEtapa" required>
+              <option value="novo">Novo</option>
+              <option value="contato">Contato</option>
+              <option value="negociacao">Negociação</option>
+              <option value="proposta">Proposta</option>
+              <option value="ganho">Ganho</option>
+              <option value="perdido">Perdido</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Veículo de interesse</span>
+            <select id="leadVeiculo">
+              <option value="">Nenhum veículo vinculado</option>
+            </select>
+          </label>
+        </div>
+
+        <label>
+          <span>Mensagem</span>
+          <textarea id="leadMensagem"></textarea>
+        </label>
+
+        <label>
+          <span>Observações internas</span>
+          <textarea id="leadObservacoes"></textarea>
+        </label>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLeadBtn">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Salvar lead</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+    <div class="admin-modal-card admin-confirm-card">
+      <div class="admin-modal-head">
+        <div>
+          <h2>Sair do painel?</h2>
+          <p>Você será desconectado da área administrativa.</p>
+        </div>
+        <button type="button" id="fecharLogoutModalBtn">×</button>
+      </div>
+
+      <div class="admin-modal-actions">
+        <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">Cancelar</button>
+        <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">Sim, sair</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/core/whatsapp.js"></script>
+  <script src="../static/js/admin/leads.js"></script>
+  <script src="../static/js/admin/leads-tabs.js"></script>
+</body>
+</html>

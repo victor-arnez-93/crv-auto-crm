@@ -1,0 +1,706 @@
+/* ============================================================
+   MAXX VEÍCULOS — CONFIGURAÇÕES.CSS
+   Sub-abas · Cards editáveis · Marca · White Label
+   ============================================================ */
+
+.config-topbar p {
+  max-width: 680px;
+  margin-top: 10px;
+
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.config-shell {
+  display: grid;
+  gap: 20px;
+}
+
+/* ==================== ABAS ==================== */
+
+.config-tabs {
+  position: sticky;
+  top: 116px;
+  z-index: 14;
+
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+
+  padding: 12px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(8,8,8,.84);
+
+  backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 18px 48px rgba(0,0,0,.32);
+}
+
+.config-tab {
+  min-height: 42px;
+  padding: 0 20px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 999px;
+  border: 1px solid transparent;
+
+  color: var(--muted);
+  background: transparent;
+
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .45px;
+
+  transition: var(--trans);
+}
+
+.config-tab:hover,
+.config-tab.active {
+  color: var(--white);
+  border-color: color-mix(in srgb, var(--dynamic-primary) 42%, transparent);
+  background: color-mix(in srgb, var(--dynamic-primary) 17%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 20%, transparent);
+}
+
+/* ==================== PAINÉIS ==================== */
+
+.config-panel {
+  display: none;
+}
+
+.config-panel.active {
+  display: block;
+}
+
+.config-card {
+  position: relative;
+  overflow: hidden;
+
+  padding: 28px;
+
+  border-radius: 28px;
+  border: 1px solid var(--line);
+
+  background:
+    radial-gradient(circle at 0% 0%, color-mix(in srgb, var(--dynamic-primary) 10%, transparent), transparent 30%),
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(12,12,12,.86);
+
+  backdrop-filter: blur(20px);
+  box-shadow: var(--shadow);
+}
+
+.config-card::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 28px;
+  bottom: 28px;
+
+  width: 3px;
+  border-radius: 999px;
+
+  background: linear-gradient(
+    180deg,
+    transparent,
+    var(--dynamic-primary),
+    transparent
+  );
+
+  opacity: .82;
+}
+
+.config-card.is-locked {
+  opacity: .96;
+}
+
+.config-card.is-locked input,
+.config-card.is-locked select,
+.config-card.is-locked textarea,
+.config-card.is-locked .config-theme-card,
+.config-card.is-locked .config-upload-box {
+  opacity: .72;
+}
+
+.config-card.is-editing {
+  border-color: color-mix(in srgb, var(--dynamic-primary) 46%, transparent);
+  box-shadow:
+    var(--shadow),
+    0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 22%, transparent),
+    0 0 46px color-mix(in srgb, var(--dynamic-primary) 10%, transparent);
+}
+
+.config-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 18px;
+
+  margin-bottom: 26px;
+}
+
+.config-card-head span {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+
+  margin-bottom: 8px;
+
+  color: var(--dynamic-primary);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.config-card-head span::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+
+  border-radius: 50%;
+  background: var(--dynamic-primary);
+  box-shadow: 0 0 14px var(--dynamic-primary);
+}
+
+.config-card-head h2 {
+  margin: 0;
+
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.config-card-head p {
+  max-width: 680px;
+  margin-top: 10px;
+
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.config-edit-btn {
+  min-height: 38px;
+  padding: 0 16px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .4px;
+
+  transition: var(--trans);
+  white-space: nowrap;
+}
+
+.config-edit-btn:hover,
+.config-card.is-editing .config-edit-btn {
+  color: var(--white);
+  border-color: color-mix(in srgb, var(--dynamic-primary) 48%, transparent);
+  background: color-mix(in srgb, var(--dynamic-primary) 20%, transparent);
+}
+
+/* ==================== FORM ==================== */
+
+.config-form-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.config-wide {
+  grid-column: span 3;
+}
+
+.config-form-grid label,
+.config-upload {
+  display: grid;
+  gap: 8px;
+}
+
+.config-form-grid label span,
+.config-upload > span,
+.config-theme-label {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+  text-transform: uppercase;
+}
+
+.config-form-grid input,
+.config-form-grid select,
+.config-form-grid textarea {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 15px;
+
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+
+  color: var(--white);
+  background: rgba(255,255,255,.045);
+
+  font-family: var(--font-body);
+  font-size: 14px;
+
+  outline: none;
+  transition: var(--trans);
+}
+
+.config-form-grid textarea {
+  min-height: 124px;
+  padding: 14px 15px;
+  resize: vertical;
+}
+
+.config-form-grid input:focus,
+.config-form-grid select:focus,
+.config-form-grid textarea:focus {
+  border-color: color-mix(in srgb, var(--dynamic-primary) 48%, transparent);
+  background: color-mix(in srgb, var(--dynamic-primary) 10%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--dynamic-primary) 12%, transparent);
+}
+
+.config-form-grid input:disabled,
+.config-form-grid select:disabled,
+.config-form-grid textarea:disabled {
+  cursor: not-allowed;
+}
+
+.config-form-grid option {
+  background: #111;
+  color: #fff;
+}
+
+.config-checks {
+  margin-top: 18px;
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.config-checks label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 11px 15px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line);
+
+  background: rgba(255,255,255,.035);
+}
+
+.config-checks input {
+  width: 17px;
+  height: 17px;
+  accent-color: var(--dynamic-primary);
+}
+
+.config-checks span {
+  color: var(--text);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+/* ==================== MARCA ==================== */
+
+.config-brand-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, .85fr) minmax(0, 1.15fr);
+  gap: 22px;
+}
+
+.config-upload input {
+  display: none;
+}
+
+.config-upload-box {
+  min-height: 86px;
+  padding: 18px;
+
+  display: grid;
+  align-content: center;
+  gap: 4px;
+
+  border-radius: 22px;
+  border: 1px dashed var(--line-2);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)),
+    rgba(255,255,255,.025);
+
+  cursor: pointer;
+  transition: var(--trans);
+}
+
+.config-upload-box:hover {
+  border-color: color-mix(in srgb, var(--dynamic-primary) 42%, transparent);
+  background: color-mix(in srgb, var(--dynamic-primary) 10%, transparent);
+}
+
+.config-upload-box strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.config-upload-box small {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.config-logo-preview {
+  margin-top: 16px;
+  padding: 22px;
+
+  min-height: 168px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 24px;
+  border: 1px solid var(--line);
+
+  background:
+    radial-gradient(circle at 50% 0%, color-mix(in srgb, var(--dynamic-primary) 12%, transparent), transparent 42%),
+    linear-gradient(135deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(5,5,5,.38);
+}
+
+.config-logo-preview img {
+  display: none;
+
+  max-width: 280px;
+  max-height: 120px;
+  object-fit: contain;
+
+  filter:
+    brightness(1.08)
+    contrast(1.05)
+    drop-shadow(0 14px 24px rgba(0,0,0,.45));
+}
+
+.config-logo-preview.has-logo img {
+  display: block;
+}
+
+.config-logo-preview.has-logo span {
+  display: none;
+}
+
+.config-logo-preview span {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.config-theme-label {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.config-theme-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.config-theme-card {
+  min-height: 112px;
+  padding: 18px;
+
+  display: grid;
+  justify-items: flex-start;
+  align-content: center;
+  gap: 6px;
+
+  border-radius: 22px;
+  border: 1px solid var(--line);
+
+  color: var(--text);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.055), rgba(255,255,255,.018)),
+    rgba(255,255,255,.025);
+
+  text-align: left;
+  transition: var(--trans);
+}
+
+.config-theme-card strong {
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.config-theme-card small {
+  color: var(--muted);
+  font-size: 12.5px;
+}
+
+.config-theme-card:hover,
+.config-theme-card.active {
+  border-color: color-mix(in srgb, var(--dynamic-primary) 48%, transparent);
+  background:
+    radial-gradient(circle at 0 0, color-mix(in srgb, var(--dynamic-primary) 14%, transparent), transparent 42%),
+    linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025)),
+    rgba(255,255,255,.035);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--dynamic-primary) 18%, transparent);
+}
+
+.theme-dot {
+  width: 18px;
+  height: 18px;
+
+  border-radius: 50%;
+  box-shadow: 0 0 16px currentColor;
+}
+
+.theme-red {
+  color: #ff3b2f;
+  background: #ff3b2f;
+}
+
+.theme-blue {
+  color: #1282ff;
+  background: #1282ff;
+}
+
+.theme-gray {
+  color: #9ca3af;
+  background: #9ca3af;
+}
+
+.theme-gold {
+  color: #d4a843;
+  background: #d4a843;
+}
+
+/* ==================== SALVAR ==================== */
+
+.config-save-bar {
+  position: sticky;
+  bottom: 18px;
+  z-index: 16;
+
+  width: fit-content;
+  max-width: 100%;
+  margin-left: auto;
+  padding: 12px;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  border-radius: 999px;
+  border: 1px solid var(--line);
+
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.045)),
+    rgba(8,8,8,.90);
+
+  backdrop-filter: blur(18px) saturate(150%);
+  box-shadow: 0 18px 60px rgba(0,0,0,.48);
+}
+
+.config-save-bar > div {
+  padding-left: 8px;
+}
+
+.config-save-bar strong {
+  display: block;
+
+  color: var(--white);
+  font-family: var(--font-display);
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.config-save-bar span {
+  display: block;
+  margin-top: 2px;
+
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.config-save-bar .admin-btn {
+  width: auto;
+  min-width: 168px;
+}
+
+.config-save-bar .admin-btn:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  filter: grayscale(.35);
+}
+
+/* ==================== TOAST ==================== */
+
+.config-toast {
+  position: fixed;
+  right: 26px;
+  bottom: 90px;
+  z-index: 5000;
+
+  max-width: 360px;
+  padding: 15px 18px;
+
+  border-radius: 18px;
+  border: 1px solid rgba(37,211,102,.34);
+
+  color: #dfffe8;
+  background:
+    linear-gradient(180deg, rgba(37,211,102,.16), rgba(37,211,102,.08)),
+    rgba(8,8,8,.92);
+
+  box-shadow: 0 18px 50px rgba(0,0,0,.45);
+
+  font-size: 14px;
+  font-weight: 700;
+
+  transform: translateY(18px);
+  opacity: 0;
+  pointer-events: none;
+
+  transition: var(--trans);
+}
+
+.config-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* ==================== TEMA CLARO ==================== */
+
+body.admin-light .config-tabs,
+body.admin-light .config-card,
+body.admin-light .config-save-bar,
+body.admin-light .config-upload-box,
+body.admin-light .config-logo-preview,
+body.admin-light .config-theme-card,
+body.admin-light .config-checks label {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.96), rgba(255,255,255,.76)),
+    rgba(255,255,255,.92);
+
+  border-color: rgba(0,0,0,.12);
+}
+
+body.admin-light .config-form-grid input,
+body.admin-light .config-form-grid select,
+body.admin-light .config-form-grid textarea {
+  color: #111;
+  background: rgba(255,255,255,.96);
+  border-color: rgba(0,0,0,.14);
+}
+
+body.admin-light .config-form-grid input:disabled,
+body.admin-light .config-form-grid select:disabled,
+body.admin-light .config-form-grid textarea:disabled {
+  color: #333;
+  background: rgba(0,0,0,.035);
+}
+
+body.admin-light .config-upload-box strong,
+body.admin-light .config-theme-card strong,
+body.admin-light .config-card-head h2,
+body.admin-light .config-save-bar strong {
+  color: #111;
+}
+
+body.admin-light .config-checks span {
+  color: #222;
+}
+
+body.admin-light .config-edit-btn {
+  color: #111;
+  background: rgba(255,255,255,.9);
+  border-color: rgba(0,0,0,.14);
+}
+
+/* ==================== RESPONSIVO ==================== */
+
+@media (max-width: 1024px) {
+  .config-tabs {
+    position: static;
+    border-radius: 24px;
+  }
+
+  .config-brand-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-save-bar {
+    position: static;
+    width: 100%;
+    border-radius: 24px;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 720px) {
+  .config-tab {
+    flex: 1 1 calc(50% - 10px);
+  }
+
+  .config-card {
+    padding: 22px 18px;
+    border-radius: 24px;
+  }
+
+  .config-card-head {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .config-edit-btn {
+    width: 100%;
+  }
+
+  .config-form-grid,
+  .config-theme-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .config-wide {
+    grid-column: auto;
+  }
+
+  .config-save-bar {
+    display: grid;
+    gap: 12px;
+  }
+
+  .config-save-bar > div {
+    padding-left: 0;
+  }
+
+  .config-save-bar .admin-btn {
+    width: 100%;
+  }
+}

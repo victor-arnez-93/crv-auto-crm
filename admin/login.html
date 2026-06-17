@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Acesso ao CRM — CRV Auto</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/login.css">
+</head>
+
+<body class="login-page">
+  <canvas id="loginParticles" aria-hidden="true"></canvas>
+
+  <main class="login-shell">
+    <section class="login-card">
+      <span class="login-scanline" aria-hidden="true"></span>
+
+      <a href="../index.html" class="login-logo" aria-label="Voltar ao site">
+        <img src="../static/img/logooficial.png" alt="CRV Auto CRM">
+      </a>
+
+      <div class="login-head">
+        <span class="login-badge">
+          <span></span>
+          CRM Automotivo SaaS
+        </span>
+
+        <h1>Gestão automotiva multiempresa</h1>
+        <p>Estoque, leads, clientes, propostas, vendas, financeiro e documentos em um só painel.</p>
+      </div>
+
+      <div class="login-tabs" id="loginTabs">
+        <button type="button" class="login-tab active" data-auth-tab="login">Entrar</button>
+        <button type="button" class="login-tab" data-auth-tab="register">Criar conta</button>
+      </div>
+
+      <div class="login-alert" id="loginAlert">
+        <strong>Atenção</strong>
+        <span id="loginAlertText">Verifique os dados informados.</span>
+      </div>
+
+      <form class="login-form auth-panel active" id="loginForm" autocomplete="off">
+        <label class="login-field">
+          <span>E-mail</span>
+          <input type="email" id="email" placeholder="seuemail@empresa.com.br" autocomplete="username" required>
+        </label>
+
+        <label class="login-field">
+          <span>Senha</span>
+          <div class="password-wrap">
+            <input type="password" id="password" placeholder="Digite sua senha" autocomplete="current-password" required>
+            <button type="button" class="password-toggle" data-password-toggle="password" aria-label="Mostrar senha">👁</button>
+          </div>
+        </label>
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="login-btn-text">Entrar no painel</span>
+          <span class="login-spinner" aria-hidden="true"></span>
+        </button>
+
+        <button type="button" class="login-link-btn" id="forgotPasswordBtn">
+          Esqueceu sua senha?
+        </button>
+      </form>
+
+      <form class="login-form auth-panel" id="registerForm" autocomplete="off">
+        <label class="login-field">
+          <span>Seu nome</span>
+          <input type="text" id="registerName" placeholder="Nome do responsável" autocomplete="name" required>
+        </label>
+
+        <label class="login-field">
+          <span>Empresa</span>
+          <input type="text" id="registerCompany" placeholder="Nome da loja ou garagem" required>
+        </label>
+
+        <label class="login-field">
+          <span>Telefone</span>
+          <input type="tel" id="registerPhone" placeholder="(15) 99999-9999" required>
+        </label>
+
+        <label class="login-field">
+          <span>E-mail</span>
+          <input type="email" id="registerEmail" placeholder="seuemail@empresa.com.br" autocomplete="email" required>
+        </label>
+
+        <label class="login-field">
+          <span>Senha</span>
+          <div class="password-wrap">
+            <input type="password" id="registerPassword" placeholder="Mínimo 6 caracteres" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-toggle="registerPassword" aria-label="Mostrar senha">👁</button>
+          </div>
+        </label>
+
+        <label class="login-field">
+          <span>Confirmar senha</span>
+          <div class="password-wrap">
+            <input type="password" id="registerPasswordConfirm" placeholder="Repita sua senha" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-toggle="registerPasswordConfirm" aria-label="Mostrar senha">👁</button>
+          </div>
+        </label>
+
+        <button type="submit" class="login-btn" id="registerBtn">
+          <span class="login-btn-text">Criar conta</span>
+          <span class="login-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <form class="login-form auth-panel" id="forgotForm" autocomplete="off">
+        <label class="login-field">
+          <span>E-mail cadastrado</span>
+          <input type="email" id="forgotEmail" placeholder="seuemail@empresa.com.br" required>
+        </label>
+
+        <button type="submit" class="login-btn" id="forgotBtn">
+          <span class="login-btn-text">Enviar recuperação</span>
+          <span class="login-spinner" aria-hidden="true"></span>
+        </button>
+
+        <button type="button" class="login-link-btn" id="backToLoginBtn">
+          Voltar para entrar
+        </button>
+      </form>
+
+      <form class="login-form auth-panel" id="resetForm" autocomplete="off">
+        <label class="login-field">
+          <span>Nova senha</span>
+          <div class="password-wrap">
+            <input type="password" id="resetPassword" placeholder="Digite a nova senha" autocomplete="new-password" required>
+            <button type="button" class="password-toggle" data-password-toggle="resetPassword" aria-label="Mostrar senha">👁</button>
+          </div>
+        </label>
+
+        <button type="submit" class="login-btn" id="resetBtn">
+          <span class="login-btn-text">Salvar nova senha</span>
+          <span class="login-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <a href="../index.html" class="login-back">← Voltar ao site</a>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+  <script src="../static/js/login.js"></script>
+</body>
+</html>

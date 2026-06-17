@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Maxx Veículos</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../static/css/main.css">
+  <link rel="stylesheet" href="../static/css/theme.css">
+  <link rel="stylesheet" href="../static/css/admin.css">
+  <link rel="stylesheet" href="../static/css/admin/estoque.css">
+</head>
+
+<body class="admin-page">
+  <aside class="admin-sidebar">
+    <a href="../index.html" class="admin-logo">
+      <img src="../static/img/logo1.png" alt="Maxx Veículos">
+    </a>
+
+<nav class="admin-menu">
+
+  <a href="admin.html">Dashboard</a>
+
+  <span class="admin-menu-label">Comercial</span>
+
+  <a href="clientes.html">Clientes</a>
+  <a href="leads.html">Leads</a>
+  <a href="propostas.html">Propostas</a>
+  <a href="vendas.html">Vendas</a>
+
+  <span class="admin-menu-label">Operação</span>
+
+  <a href="estoque.html" class="active">Estoque</a>
+  <a href="financeiro.html">Financeiro</a>
+  <a href="documentos.html">Documentos</a>
+
+  <span class="admin-menu-label">Sistema</span>
+
+  <a href="configuracoes.html">Configurações</a>
+
+  <button type="button" id="logoutBtn">Sair</button>
+
+</nav>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-eyebrow">Painel administrativo</span>
+        <h1>Estoque de veículos</h1>
+      </div>
+
+    </header>
+
+    <section class="admin-stats">
+      <article>
+        <span>Total</span>
+        <strong id="statTotal">0</strong>
+      </article>
+
+      <article>
+        <span>Disponíveis</span>
+        <strong id="statDisponiveis">0</strong>
+      </article>
+
+      <article>
+        <span>Vendidos</span>
+        <strong id="statVendidos">0</strong>
+      </article>
+
+      <article>
+        <span>Destaques</span>
+        <strong id="statDestaques">0</strong>
+      </article>
+
+      <article>
+        <span>Fotos</span>
+        <strong id="statFotos">0</strong>
+      </article>
+
+      <article>
+        <span>Preço médio</span>
+        <strong id="statPrecoMedio">R$ 0</strong>
+      </article>
+    </section>
+
+    <section class="admin-quick">
+      <div>
+        <h2>Ações rápidas</h2>
+        <p>Atalhos para as tarefas principais do painel.</p>
+      </div>
+
+      <div class="admin-quick-actions">
+        <button class="admin-btn admin-btn-primary" id="quickNovoVeiculoBtn">
+          + Cadastrar veículo
+        </button>
+
+        <a href="../index.html" target="_blank" class="admin-btn admin-btn-ghost">
+          Ver site
+        </a>
+      </div>
+    </section>
+
+    <section class="admin-panel" id="estoque">
+<div class="admin-panel-head">
+  <div>
+    <h2>Veículos cadastrados</h2>
+    <p>Cadastre, edite, destaque ou marque veículos como vendidos.</p>
+  </div>
+</div>
+
+<div class="admin-filters">
+  <input type="search" id="buscaAdmin" placeholder="Buscar veículo...">
+
+  <select id="filtroStatusAdmin">
+    <option value="">Status: Todos</option>
+    <option value="disponivel">Disponíveis</option>
+    <option value="vendido">Vendidos</option>
+    <option value="ativo">Ativos no site</option>
+    <option value="inativo">Inativos</option>
+  </select>
+
+  <select id="filtroDestaqueAdmin">
+    <option value="">Destaque: Todos</option>
+    <option value="sim">Destaques</option>
+    <option value="nao">Não destaques</option>
+  </select>
+
+  <select id="filtroCondicaoAdmin">
+    <option value="">Condição: Todas</option>
+    <option value="novo">Novo / baixa KM</option>
+    <option value="seminovo">Seminovo</option>
+    <option value="usado">Usado</option>
+  </select>
+
+  <select id="filtroMarcaAdmin">
+    <option value="">Marca: Todas</option>
+  </select>
+
+  <select id="filtroAnoAdmin">
+    <option value="">Ano: Todos</option>
+  </select>
+
+  <select id="filtroOrdemAdmin">
+    <option value="recentes">Mais recentes</option>
+    <option value="preco-desc">Maior preço</option>
+    <option value="preco-asc">Menor preço</option>
+    <option value="ano-desc">Mais novo</option>
+    <option value="km-asc">Menor KM</option>
+  </select>
+</div>
+
+      <div class="admin-table-wrap">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Veículo</th>
+              <th>Ano</th>
+              <th>KM</th>
+              <th>Preço</th>
+              <th>Fotos</th>
+              <th>Status</th>
+              <th>Destaque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+
+          <tbody id="veiculosTable"></tbody>
+        </table>
+
+        <div class="admin-empty" id="adminEmpty">
+          Nenhum veículo cadastrado ainda.
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div class="admin-modal" id="veiculoModal">
+    <div class="admin-modal-card">
+      <div class="admin-modal-head">
+        <h2 id="modalTitle">Novo veículo</h2>
+        <button type="button" id="fecharModalBtn">×</button>
+      </div>
+
+      <form id="veiculoForm" class="admin-form">
+        <input type="hidden" id="veiculoId">
+
+<div class="admin-form-grid">
+<label>
+  <span>Marca</span>
+
+  <select id="marcaSelect" required>
+    <option value="">Selecione</option>
+    <option>Chevrolet</option>
+    <option>Volkswagen</option>
+    <option>Fiat</option>
+    <option>Toyota</option>
+    <option>Honda</option>
+    <option>Hyundai</option>
+    <option>Jeep</option>
+    <option>Renault</option>
+    <option>Nissan</option>
+    <option>Ford</option>
+    <option>BMW</option>
+    <option>Mercedes-Benz</option>
+    <option>Audi</option>
+    <option value="outros">Outros</option>
+  </select>
+
+  <input id="marcaOutro" type="text" placeholder="Digite a marca" class="admin-extra-input">
+</label>
+
+<label>
+  <span>Modelo</span>
+
+  <select id="modeloSelect" required>
+    <option value="">Selecione a marca primeiro</option>
+  </select>
+
+  <input id="modeloOutro" type="text" placeholder="Digite o modelo" class="admin-extra-input">
+</label>
+
+          <label>
+            <span>Versão</span>
+            <input id="versao">
+          </label>
+
+          <label>
+            <span>Ano</span>
+            <input id="ano" type="text" inputmode="numeric" maxlength="4" required>
+          </label>
+
+          <label>
+            <span>KM</span>
+            <input id="km" type="text" inputmode="numeric" required>
+          </label>
+
+          <label>
+            <span>Câmbio</span>
+            <select id="cambio" required>
+              <option value="">Selecione</option>
+              <option>Manual</option>
+              <option>Automático</option>
+              <option>CVT</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Combustível</span>
+            <select id="combustivel" required>
+              <option value="">Selecione</option>
+              <option>Flex</option>
+              <option>Gasolina</option>
+              <option>Diesel</option>
+              <option>Híbrido</option>
+              <option>Elétrico</option>
+            </select>
+          </label>
+
+          <label>
+            <span>Cor</span>
+            <input id="cor" required>
+          </label>
+
+          <label>
+            <span>Preço</span>
+            <input id="preco" type="text" inputmode="numeric" placeholder="R$ 0,00" required>
+          </label>
+        </div>
+
+        <label>
+          <span>Descrição</span>
+          <textarea id="descricao"></textarea>
+        </label>
+
+        <label>
+          <span>Opcionais</span>
+          <textarea id="opcionais" placeholder="Um opcional por linha"></textarea>
+        </label>
+
+        <label>
+          <span>Fotos do veículo</span>
+          <input id="fotos" type="file" accept="image/*" multiple>
+        </label>
+
+        <div class="admin-checks">
+          <label>
+            <input id="ativo" type="checkbox" checked>
+            <span>Ativo no site</span>
+          </label>
+
+          <label>
+            <input id="destaque" type="checkbox">
+            <span>Destaque da semana</span>
+          </label>
+
+          <label>
+            <input id="vendido" type="checkbox">
+            <span>Vendido</span>
+          </label>
+        </div>
+
+        <div class="admin-modal-actions">
+          <button type="button" class="admin-btn admin-btn-ghost" id="cancelarBtn">Cancelar</button>
+          <button type="submit" class="admin-btn admin-btn-primary">Salvar veículo</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="admin-modal" id="logoutModal">
+  <div class="admin-modal-card admin-confirm-card">
+    <div class="admin-modal-head">
+      <div>
+        <h2>Sair do painel?</h2>
+        <p>Você será desconectado da área administrativa.</p>
+      </div>
+
+      <button type="button" id="fecharLogoutModalBtn">×</button>
+    </div>
+
+    <div class="admin-modal-actions">
+      <button type="button" class="admin-btn admin-btn-ghost" id="cancelarLogoutBtn">
+        Cancelar
+      </button>
+
+      <button type="button" class="admin-btn admin-btn-primary" id="confirmarLogoutBtn">
+        Sim, sair
+      </button>
+    </div>
+  </div>
+</div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../static/js/supabase.js"></script>
+
+  <script src="../static/js/core/empresa.js"></script>
+  <script src="../static/js/core/theme.js"></script>
+  <script src="../static/js/admin/estoque.js"></script>
+</body>
+</html>
