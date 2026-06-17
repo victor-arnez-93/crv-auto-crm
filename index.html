@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>CRV Auto CRM — Gestão Automotiva SaaS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="static/css/main.css">
+  <link rel="stylesheet" href="static/css/landing.css">
+</head>
+
+<body class="crm-landing">
+  <canvas id="landingParticles" aria-hidden="true"></canvas>
+
+  <main class="landing-shell">
+    <header class="landing-header">
+      <a href="index.html" class="landing-logo">
+        <img src="static/img/logoficial.png" alt="CRV Auto CRM">
+      </a>
+
+      <button type="button" class="landing-header-btn" id="openPreLoginTop">
+        Entrar no sistema
+      </button>
+    </header>
+
+    <section class="landing-hero">
+      <div class="landing-copy">
+        <span class="landing-kicker">CRM Automotivo SaaS</span>
+
+        <h1>Gestão completa para lojas de veículos.</h1>
+
+        <p>
+          Controle estoque, leads, clientes, propostas, vendas, financeiro e documentos em um painel moderno, multiempresa e preparado para escala.
+        </p>
+
+        <div class="landing-actions">
+          <button type="button" class="landing-primary" id="openPreLogin">
+            Entrar no sistema
+          </button>
+
+          <a href="#recursos" class="landing-secondary">
+            Ver recursos
+          </a>
+        </div>
+
+        <div class="landing-metrics">
+          <div>
+            <strong>100%</strong>
+            <span>multiempresa</span>
+          </div>
+
+          <div>
+            <strong>SaaS</strong>
+            <span>white label</span>
+          </div>
+
+          <div>
+            <strong>CRM</strong>
+            <span>automotivo</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="landing-preview">
+        <div class="preview-card">
+          <div class="preview-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+
+          <div class="preview-grid">
+            <div>
+              <small>Leads hoje</small>
+              <strong>18</strong>
+            </div>
+
+            <div>
+              <small>Vendas</small>
+              <strong>7</strong>
+            </div>
+
+            <div>
+              <small>Estoque</small>
+              <strong>42</strong>
+            </div>
+
+            <div>
+              <small>Conversão</small>
+              <strong>31%</strong>
+            </div>
+          </div>
+
+          <div class="preview-line"></div>
+          <div class="preview-line short"></div>
+          <div class="preview-bar"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="landing-features" id="recursos">
+      <article>
+        <span>01</span>
+        <h3>Estoque inteligente</h3>
+        <p>Cadastro de veículos, fotos, status, destaque, vendidos e integração direta com o site público.</p>
+      </article>
+
+      <article>
+        <span>02</span>
+        <h3>Funil comercial</h3>
+        <p>Leads, clientes, propostas e vendas conectados no mesmo fluxo operacional.</p>
+      </article>
+
+      <article>
+        <span>03</span>
+        <h3>Multiempresa</h3>
+        <p>Cada loja acessa apenas seus próprios dados com isolamento por empresa.</p>
+      </article>
+    </section>
+  </main>
+
+  <div class="prelogin-modal" id="preLoginModal">
+    <div class="prelogin-card">
+      <button type="button" class="prelogin-close" id="closePreLogin">×</button>
+
+      <img src="static/img/logoficial.png" alt="CRV Auto CRM">
+
+      <span>Acesso administrativo</span>
+      <h2>Pré-login do sistema</h2>
+      <p>Informe as credenciais internas para acessar a tela de login do CRM.</p>
+
+      <div class="prelogin-alert" id="preLoginAlert">
+        Usuário ou senha incorretos.
+      </div>
+
+      <form id="preLoginForm">
+        <label>
+          <span>E-mail</span>
+          <input type="email" id="preLoginEmail" placeholder="admin@sistema.com" required>
+        </label>
+
+        <label>
+          <span>Senha</span>
+          <input type="password" id="preLoginPassword" placeholder="Digite a senha" required>
+        </label>
+
+        <button type="submit">
+          Continuar
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <script src="static/js/landing.js"></script>
+</body>
+</html>
