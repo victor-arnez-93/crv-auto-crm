@@ -129,6 +129,115 @@ function obterLinkWhatsapp(lead) {
   return `https://wa.me/${numeroFinal}?text=${encodeURIComponent(montarMensagemWhatsappLead(lead))}`;
 }
 
+function iconWhatsapp() {
+  return `
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path fill="currentColor" d="M16.04 3C8.86 3 3.03 8.82 3.03 15.98c0 2.3.6 4.55 1.75 6.53L3 29l6.65-1.74a12.9 12.9 0 0 0 6.39 1.68h.01c7.17 0 13-5.82 13-12.98C29.05 8.82 23.22 3 16.04 3Zm0 23.75h-.01a10.72 10.72 0 0 1-5.46-1.5l-.39-.23-3.94 1.03 1.05-3.84-.25-.4a10.73 10.73 0 0 1-1.65-5.83c0-5.95 4.85-10.8 10.82-10.8 2.89 0 5.6 1.13 7.64 3.17a10.72 10.72 0 0 1 3.17 7.63c0 5.96-4.85 10.77-10.98 10.77Zm5.92-8.08c-.32-.16-1.9-.94-2.2-1.05-.3-.11-.52-.16-.74.16-.22.33-.85 1.05-1.04 1.27-.19.22-.38.25-.7.08-.32-.16-1.36-.5-2.6-1.6-.96-.86-1.61-1.92-1.8-2.24-.19-.33-.02-.5.14-.66.15-.15.32-.38.49-.57.16-.19.22-.33.32-.55.11-.22.06-.41-.03-.57-.08-.16-.74-1.78-1.01-2.44-.27-.64-.54-.55-.74-.56h-.63c-.22 0-.57.08-.87.41-.3.33-1.14 1.11-1.14 2.71s1.17 3.15 1.33 3.37c.16.22 2.3 3.51 5.58 4.92.78.34 1.39.54 1.86.69.78.25 1.5.21 2.06.13.63-.09 1.9-.78 2.17-1.53.27-.75.27-1.39.19-1.53-.08-.14-.3-.22-.62-.38Z"/>
+    </svg>
+  `;
+}
+
+function montarObservacaoClienteDoLead(lead) {
+  const veiculo = obterNomeVeiculo(lead.veiculo_id);
+  const partes = [];
+
+  partes.push('Cliente convertido a partir de lead.');
+
+  if (veiculo) {
+    partes.push(`Veículo de interesse: ${veiculo}.`);
+  }
+
+  if (lead.mensagem) {
+    partes.push(`Mensagem enviada no site: "${lead.mensagem}".`);
+  }
+
+  if (lead.observacoes) {
+    partes.push(`Observações do lead: ${lead.observacoes}`);
+  }
+
+  return partes.join('\n');
+}
+
+async function converterLeadEmCliente(id) {
+  const lead = leads.find((item) => item.id === id);
+  if (!lead) return;
+
+  if (lead.cliente_id) {
+    alert('Este lead já está vinculado a um cliente.');
+    return;
+  }
+
+  const telefoneLimpo = somenteNumeros(lead.telefone);
+  const emailLimpo = String(lead.email || '').trim().toLowerCase();
+
+  try {
+    let clienteExistente = null;
+
+    if (telefoneLimpo || emailLimpo) {
+      let query = window.MAXX_SUPABASE
+        .from('clientes')
+        .select('*')
+        .eq('empresa_id', empresaIdAtual)
+        .limit(1);
+
+      if (emailLimpo && telefoneLimpo) {
+        query = query.or(`email.eq.${emailLimpo},telefone.eq.${lead.telefone},whatsapp.eq.${lead.telefone}`);
+      } else if (emailLimpo) {
+        query = query.eq('email', emailLimpo);
+      } else {
+        query = query.or(`telefone.eq.${lead.telefone},whatsapp.eq.${lead.telefone}`);
+      }
+
+      const { data, error } = await query.maybeSingle();
+
+      if (error) throw error;
+      clienteExistente = data;
+    }
+
+    let clienteId = clienteExistente?.id || null;
+
+    if (!clienteId) {
+      const { data: novoCliente, error: clienteError } = await window.MAXX_SUPABASE
+        .from('clientes')
+        .insert({
+          empresa_id: empresaIdAtual,
+          nome: capitalizarTexto(lead.nome),
+          telefone: lead.telefone || null,
+          whatsapp: lead.telefone || null,
+          email: emailLimpo || null,
+          origem: lead.origem || 'Site',
+          status: 'ativo',
+          observacoes: montarObservacaoClienteDoLead(lead)
+        })
+        .select()
+        .single();
+
+      if (clienteError) throw clienteError;
+
+      clienteId = novoCliente.id;
+    }
+
+    const { error: leadError } = await window.MAXX_SUPABASE
+      .from('leads')
+      .update({
+        cliente_id: clienteId,
+        etapa: lead.etapa === 'novo' ? 'negociacao' : lead.etapa,
+        updated_at: new Date().toISOString()
+      })
+      .eq('id', lead.id)
+      .eq('empresa_id', empresaIdAtual);
+
+    if (leadError) throw leadError;
+
+    await carregarLeads();
+
+    alert('Lead convertido em cliente com sucesso.');
+  } catch (error) {
+    console.error(error);
+    alert(error.message || 'Erro ao converter lead em cliente.');
+  }
+}
+
 function nomeEtapa(etapa) {
   const nomes = {
     novo: 'Novo',
@@ -370,11 +479,16 @@ function renderizarLeads() {
         <div class="admin-actions">
           ${
             whatsappLink
-              ? `<a class="admin-icon-btn lead-whatsapp-action" href="${whatsappLink}" target="_blank" rel="noopener" title="Responder no WhatsApp">↗</a>`
+              ? `<a class="admin-icon-btn lead-whatsapp-action" href="${whatsappLink}" target="_blank" rel="noopener" title="Responder no WhatsApp">${iconWhatsapp()}</a>`
               : ''
           }
-          <button class="admin-icon-btn" onclick="editarLead('${lead.id}')" title="Editar">✎</button>
-          <button class="admin-icon-btn" onclick="excluirLead('${lead.id}')" title="Excluir">×</button>
+            ${
+  lead.cliente_id
+    ? `<span class="lead-converted-badge" title="Cliente já convertido">Cliente</span>`
+    : `<button class="admin-icon-btn lead-convert-action" onclick="converterLeadEmCliente('${lead.id}')" title="Converter em cliente">👤</button>`
+}
+<button class="admin-icon-btn" onclick="editarLead('${lead.id}')" title="Editar">✎</button>
+<button class="admin-icon-btn" onclick="excluirLead('${lead.id}')" title="Excluir">×</button>
         </div>
       </td>
     `;
