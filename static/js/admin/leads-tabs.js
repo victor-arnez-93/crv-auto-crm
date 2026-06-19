@@ -27,7 +27,43 @@
   host.insertBefore(atend, funil.nextSibling);
 
   function ativo(){ const b = tabs.querySelector('.cfx-tab.active'); return b ? b.dataset.tab : 'lista'; }
-  function lista(){ return (typeof obterLeadsFiltrados === 'function') ? obterLeadsFiltrados() : (typeof leads !== 'undefined' ? leads : []); }
+    function montarMensagemWhatsappLead(lead) {
+    const nome = lead.nome || '';
+    const veiculo = obterNomeVeiculo(lead.veiculo_id);
+    const mensagemCliente = lead.mensagem || '';
+
+    let msg = `Olá ${nome}, tudo bem? Recebemos seu interesse`;
+
+    if (veiculo) {
+      msg += ` no veículo ${veiculo}`;
+    }
+
+    msg += '.';
+
+    if (mensagemCliente) {
+      msg += `\n\nMensagem enviada no site:\n"${mensagemCliente}"`;
+    }
+
+    msg += '\n\nPosso te passar mais detalhes?';
+
+    return msg;
+  }
+
+  function montarLinkWhatsappLead(lead) {
+    if (typeof WhatsAppCRM !== 'undefined' && WhatsAppCRM.linkWhatsApp) {
+      return WhatsAppCRM.linkWhatsApp(
+        lead.telefone,
+        montarMensagemWhatsappLead(lead)
+      );
+    }
+
+    const numeros = String(lead.telefone || '').replace(/\D/g, '');
+    if (!numeros) return '';
+
+    const numeroFinal = numeros.startsWith('55') ? numeros : `55${numeros}`;
+
+    return `https://wa.me/${numeroFinal}?text=${encodeURIComponent(montarMensagemWhatsappLead(lead))}`;
+  }
 
   function setTab(tab){
     tabs.querySelectorAll('.cfx-tab').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
@@ -46,7 +82,7 @@
     board.innerHTML = ETAPAS.map(et => {
       const itens = dados.filter(l => (l.etapa || 'novo') === et);
       const cards = itens.map(l => {
-        const wa = obterLinkWhatsapp(l.telefone), veic = obterNomeVeiculo(l.veiculo_id);
+        const wa = montarLinkWhatsappLead(l), veic = obterNomeVeiculo(l.veiculo_id);
         return '<div class="cfx-card" draggable="true" data-id="' + l.id + '">' +
             '<b>' + limparTextoHTML(l.nome) + '</b>' +
             (veic ? '<small>' + limparTextoHTML(veic) + '</small>' : '') +
@@ -118,7 +154,7 @@
         catch (err) { alert(err.message); }
       });
       row.querySelector('.cfx-btn.wa').addEventListener('click', async () => {
-        const msg = 'Olá ' + (l.nome || '') + ', tudo bem? Sou da equipe e quero te ajudar com seu interesse.';
+        const msg = montarMensagemWhatsappLead(l);
         await WhatsAppCRM.abrirEAtender({ telefone: l.telefone, mensagem: msg, lead_id: id, cliente_id: l.cliente_id || null, veiculo_id: l.veiculo_id || null });
         if (typeof carregarLeads === 'function') await carregarLeads();
       });
