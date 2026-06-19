@@ -26,7 +26,16 @@
   host.insertBefore(funil, wrap.nextSibling);
   host.insertBefore(atend, funil.nextSibling);
 
-  function ativo(){ const b = tabs.querySelector('.cfx-tab.active'); return b ? b.dataset.tab : 'lista'; }
+    function ativo() {
+    const b = tabs.querySelector('.cfx-tab.active');
+    return b ? b.dataset.tab : 'lista';
+  }
+
+  function lista() {
+    return (typeof obterLeadsFiltrados === 'function')
+      ? obterLeadsFiltrados()
+      : (typeof leads !== 'undefined' ? leads : []);
+  }
     function montarMensagemWhatsappLead(lead) {
     const nome = lead.nome || '';
     const veiculo = obterNomeVeiculo(lead.veiculo_id);
