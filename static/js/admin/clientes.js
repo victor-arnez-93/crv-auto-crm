@@ -367,9 +367,42 @@ function atualizarStats() {
   statClientesWhatsapp.textContent = comWhatsapp;
 }
 
-function criarPropostaCliente(id) {
-  window.location.href =
-    `propostas.html?cliente_id=${id}`;
+async function criarPropostaCliente(id) {
+  try {
+
+    const { data: lead, error } = await supabaseClient
+      .from('leads')
+      .select('id, veiculo_id')
+      .eq('empresa_id', empresaIdAtual)
+      .eq('cliente_id', id)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+
+    const params = new URLSearchParams();
+
+    params.set('cliente_id', id);
+
+    if (lead?.id) {
+      params.set('lead_id', lead.id);
+    }
+
+    if (lead?.veiculo_id) {
+      params.set('veiculo_id', lead.veiculo_id);
+    }
+
+    window.location.href =
+      `propostas.html?${params.toString()}`;
+
+  } catch (error) {
+
+    console.error(error);
+
+    window.location.href =
+      `propostas.html?cliente_id=${id}`;
+  }
 }
 
 /* ==================== AÇÕES ==================== */
