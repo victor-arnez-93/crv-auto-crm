@@ -321,10 +321,33 @@ function renderizarClientes() {
       <td>${formatarData(cliente.created_at)}</td>
 
       <td>
-        <div class="admin-actions">
-          <button class="admin-icon-btn" onclick="editarCliente('${cliente.id}')" title="Editar">✎</button>
-          <button class="admin-icon-btn" onclick="excluirCliente('${cliente.id}')" title="Excluir">×</button>
-        </div>
+<div class="admin-actions">
+
+  <button
+    class="admin-icon-btn"
+    onclick="criarPropostaCliente('${cliente.id}')"
+    title="Criar proposta"
+  >
+    $
+  </button>
+
+  <button
+    class="admin-icon-btn"
+    onclick="editarCliente('${cliente.id}')"
+    title="Editar"
+  >
+    ✎
+  </button>
+
+  <button
+    class="admin-icon-btn"
+    onclick="excluirCliente('${cliente.id}')"
+    title="Excluir"
+  >
+    ×
+  </button>
+
+</div>
       </td>
     `;
 
@@ -344,8 +367,12 @@ function atualizarStats() {
   statClientesWhatsapp.textContent = comWhatsapp;
 }
 
-/* ==================== AÇÕES ==================== */
+function criarPropostaCliente(id) {
+  window.location.href =
+    `propostas.html?cliente_id=${id}`;
+}
 
+/* ==================== AÇÕES ==================== */
 function editarCliente(id) {
   const cliente = clientes.find((item) => item.id === id);
 

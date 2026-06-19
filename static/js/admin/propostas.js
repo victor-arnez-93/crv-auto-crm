@@ -124,6 +124,104 @@ function obterVeiculoNome(id) {
   return `${veiculo.marca} ${veiculo.modelo} ${veiculo.ano || ''}`.trim();
 }
 
+function obterVeiculo(id) {
+  return veiculos.find((item) => item.id === id) || null;
+}
+
+function recalcularProposta() {
+  const valor =
+    converterPrecoBR(
+      document.getElementById('propostaValor')?.value
+    );
+
+  const entrada =
+    converterPrecoBR(
+      document.getElementById('propostaEntrada')?.value
+    );
+
+  const parcelas =
+    Number(
+      somenteNumeros(
+        document.getElementById('propostaParcelas')?.value || '0'
+      )
+    );
+
+  const financiado = Math.max(0, valor - entrada);
+
+  document.getElementById('propostaFinanciado').value =
+    formatarMoeda(financiado);
+
+  if (parcelas > 0) {
+    document.getElementById('propostaValorParcela').value =
+      formatarMoeda(financiado / parcelas);
+  } else {
+    document.getElementById('propostaValorParcela').value =
+      formatarMoeda(0);
+  }
+}
+
+function preencherValorPorVeiculo() {
+  const veiculoId = document.getElementById('propostaVeiculo').value;
+  const veiculo = obterVeiculo(veiculoId);
+
+  if (!veiculo) return;
+
+  document.getElementById('propostaValor').value = formatarMoeda(veiculo.preco || 0);
+
+  recalcularProposta();
+}
+
+function preencherPorLead() {
+  const leadId = document.getElementById('propostaLead').value;
+  const lead = leads.find((item) => item.id === leadId);
+
+  if (!lead) return;
+
+  if (lead.cliente_id) {
+    document.getElementById('propostaCliente').value = lead.cliente_id;
+  }
+
+  if (lead.veiculo_id) {
+    document.getElementById('propostaVeiculo').value = lead.veiculo_id;
+    preencherValorPorVeiculo();
+  }
+
+  const veiculoNome = obterVeiculoNome(lead.veiculo_id);
+
+  document.getElementById('propostaObservacoes').value = [
+    'Proposta gerada a partir de lead.',
+    veiculoNome ? `Veículo de interesse: ${veiculoNome}.` : '',
+    lead.mensagem ? `Mensagem do cliente: "${lead.mensagem}".` : '',
+    lead.observacoes ? `Observações do lead: ${lead.observacoes}` : ''
+  ].filter(Boolean).join('\n');
+}
+
+async function aplicarParametrosIniciais() {
+  const params = new URLSearchParams(window.location.search);
+
+  const clienteId = params.get('cliente_id');
+  const leadId = params.get('lead_id');
+  const veiculoId = params.get('veiculo_id');
+
+  if (!clienteId && !leadId && !veiculoId) return;
+
+  abrirPropostaModal();
+
+  if (clienteId) {
+    document.getElementById('propostaCliente').value = clienteId;
+  }
+
+  if (leadId) {
+    document.getElementById('propostaLead').value = leadId;
+    preencherPorLead();
+  }
+
+  if (veiculoId) {
+    document.getElementById('propostaVeiculo').value = veiculoId;
+    preencherValorPorVeiculo();
+  }
+}
+
 /* ==================== MÁSCARAS ==================== */
 
 [
@@ -135,12 +233,17 @@ function obterVeiculoNome(id) {
 
   campo?.addEventListener('input', () => {
     campo.value = formatarPrecoInput(campo.value);
+    recalcularProposta();
   });
 });
 
 document.getElementById('propostaParcelas')?.addEventListener('input', (event) => {
   event.target.value = somenteNumeros(event.target.value).slice(0, 3);
+  recalcularProposta();
 });
+
+document.getElementById('propostaVeiculo')?.addEventListener('change', preencherValorPorVeiculo);
+document.getElementById('propostaLead')?.addEventListener('change', preencherPorLead);
 
 /* ==================== SELECTS ==================== */
 
@@ -531,4 +634,5 @@ propostaForm?.addEventListener('submit', async (event) => {
 
   await carregarSelects();
   await carregarPropostas();
+  await aplicarParametrosIniciais();
 })();

@@ -238,6 +238,27 @@ async function converterLeadEmCliente(id) {
   }
 }
 
+function criarPropostaLead(id) {
+  const lead = leads.find(item => item.id === id);
+
+  if (!lead) return;
+
+  const params = new URLSearchParams();
+
+  if (lead.cliente_id) {
+    params.set('cliente_id', lead.cliente_id);
+  }
+
+  params.set('lead_id', lead.id);
+
+  if (lead.veiculo_id) {
+    params.set('veiculo_id', lead.veiculo_id);
+  }
+
+  window.location.href =
+    `propostas.html?${params.toString()}`;
+}
+
 function nomeEtapa(etapa) {
   const nomes = {
     novo: 'Novo',
@@ -483,9 +504,25 @@ function renderizarLeads() {
               : ''
           }
             ${
-  lead.cliente_id
-    ? `<span class="lead-converted-badge" title="Cliente já convertido">Cliente</span>`
-    : `<button class="admin-icon-btn lead-convert-action" onclick="converterLeadEmCliente('${lead.id}')" title="Converter em cliente">👤</button>`
+    lead.cliente_id
+  ? `
+      <button
+        class="admin-icon-btn lead-proposta-action"
+        onclick="criarPropostaLead('${lead.id}')"
+        title="Criar proposta"
+      >
+        $
+      </button>
+    `
+  : `
+      <button
+        class="admin-icon-btn lead-convert-action"
+        onclick="converterLeadEmCliente('${lead.id}')"
+        title="Converter em cliente"
+      >
+        👤
+      </button>
+    `
 }
 <button class="admin-icon-btn" onclick="editarLead('${lead.id}')" title="Editar">✎</button>
 <button class="admin-icon-btn" onclick="excluirLead('${lead.id}')" title="Excluir">×</button>
