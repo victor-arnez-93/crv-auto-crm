@@ -425,6 +425,16 @@
   transform: translateY(-2px);
 }
 
+.lead-whatsapp-action {
+  color: #25d366;
+}
+
+.lead-whatsapp-action:hover {
+  color: #fff;
+  background: rgba(37, 211, 102, .18);
+  border-color: rgba(37, 211, 102, .42);
+}
+
 /* ==================== EMPTY ==================== */
 
 .admin-empty {

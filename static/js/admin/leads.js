@@ -98,12 +98,35 @@ function formatarData(dataISO) {
   });
 }
 
-function obterLinkWhatsapp(numero) {
-  const numeros = somenteNumeros(numero);
+function montarMensagemWhatsappLead(lead) {
+  const nome = lead.nome || '';
+  const veiculo = obterNomeVeiculo(lead.veiculo_id);
+  const mensagemCliente = lead.mensagem || '';
+
+  let msg = `Olá ${nome}, tudo bem? Recebemos seu interesse`;
+
+  if (veiculo) {
+    msg += ` no veículo ${veiculo}`;
+  }
+
+  msg += '.';
+
+  if (mensagemCliente) {
+    msg += `\n\nVi sua mensagem:\n"${mensagemCliente}"`;
+  }
+
+  msg += '\n\nPosso te passar mais detalhes, valor e condições?';
+
+  return msg;
+}
+
+function obterLinkWhatsapp(lead) {
+  const numeros = somenteNumeros(lead?.telefone);
   if (!numeros) return null;
 
   const numeroFinal = numeros.startsWith('55') ? numeros : `55${numeros}`;
-  return `https://wa.me/${numeroFinal}`;
+
+  return `https://wa.me/${numeroFinal}?text=${encodeURIComponent(montarMensagemWhatsappLead(lead))}`;
 }
 
 function nomeEtapa(etapa) {
@@ -308,7 +331,7 @@ function renderizarLeads() {
   filtrados.forEach((lead) => {
     const tr = document.createElement('tr');
 
-    const whatsappLink = obterLinkWhatsapp(lead.telefone);
+    const whatsappLink = obterLinkWhatsapp(lead);
     const veiculoNome = obterNomeVeiculo(lead.veiculo_id);
 
     tr.innerHTML = `
@@ -327,11 +350,7 @@ function renderizarLeads() {
 
       <td>
         <div class="lead-contato">
-          ${
-            whatsappLink
-              ? `<a href="${whatsappLink}" target="_blank">${limparTextoHTML(lead.telefone || '-')}</a>`
-              : `<span>${limparTextoHTML(lead.telefone || '-')}</span>`
-          }
+          <span>${limparTextoHTML(lead.telefone || '-')}</span>
         </div>
       </td>
 
@@ -349,6 +368,11 @@ function renderizarLeads() {
 
       <td>
         <div class="admin-actions">
+          ${
+            whatsappLink
+              ? `<a class="admin-icon-btn lead-whatsapp-action" href="${whatsappLink}" target="_blank" rel="noopener" title="Responder no WhatsApp">↗</a>`
+              : ''
+          }
           <button class="admin-icon-btn" onclick="editarLead('${lead.id}')" title="Editar">✎</button>
           <button class="admin-icon-btn" onclick="excluirLead('${lead.id}')" title="Excluir">×</button>
         </div>
